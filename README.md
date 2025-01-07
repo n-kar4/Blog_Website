@@ -173,13 +173,42 @@ For the following, evaluate rows that contain an ""A"" TransactionType, ""P"" in
 3•	No Translation found for No Telus Code (TTC of AccountFunding) ERF to ERF Trans Type Code: 
         o	     Error Description: ""Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file""+Y24"
 								
-								
-								
-								
-								
-								
-								
-								
+
+	----------------------------------------------------------------------------------------------------------------
+
+payment table
+ PayeeID	PaymentID	TransactionCategory	TransactionType	TransactionCode	AccountFunding	TransactionAmount_Previous	TransactionAmount	TransactionPercent
+10000000007Z17409P01	8859e030-177f-4077-afaa-c83c42c3d8b0	EA-LS-TRAN	A	Z17409ZQNNTT0694R	556407-E1.Z678PD.E01		65628.9	
+10000000031Z00940P01	82ea68b4-221c-4319-88f1-c4f17df8da55	RETRO	A	Z00940ZQPNMP0861P	523662-E1.PURANN.E01	0	3384.16	
+10000000068Z17051P01	c48cd381-d970-41aa-bee7-ee9e1201cb88	EA-LS-TRAN	A	Z17051ZQNNTT0007R	194540-E1.J060PD.E01		52483.02	
+10000000153D17349P01	f451b593-ce85-4d91-a7ac-f1f4af831905	EA-LS-TRAN	A	D17349ZQNNTT0667R	556245-E5.Z346PD.E01		1405124.28	
+
+----------------------------------------------------------
+deposit table
+PayeeID	PaymentID	PaymentDate	PaymentFrequency	RoutingNumber	AccountType	BankAccount	PayableTo	FBO
+10000000360Z17470P01	060736b9-14e7-429f-b9cf-04221e7ef098	12/13/2024	M	314074269	22	186995725		
+10000008407Z16741P01	971b8160-7856-43b9-9a52-eb5f4f300420	12/13/2024					ANTONIO CUADROS	
+10000061334Z17411B01	4281367e-84b2-4b15-a6bd-2cb723ee20f4	12/13/2024					CHARLES SCHWAB & CO INC	* 20907879 JENAYA L SAGE-CHAVEZ
+10000123070Z17284P02	40e44323-081e-4d7c-9bed-96a39173f3e3	12/13/2024	M	64000059	22	292487949		
+
+--------------------------------------------------------------------------
+ggloockup
+CNTRCT_NO	CNTRCT_NUM	PRU_Contract_SUB	CNTRCT_TYP_CD	ERF_STAT_CD	Fund_ID	Series_Id	EASY_Group_Account_Id	EASY_Group_Client_Id	SDIO_ID	Pru_Client_Name	Pru_Plan_Name	Action_based_on_Randy's_email	Reasoning	Dup_check
+65	65	1	F21	D       	6C1		523352-E1	523352	PURANN	ARMSTRONG WORLD INDUSTRIES	Armstrong Cork Company			
+67	67	1	F11	D       	6C1		523630-E1	523630	PURANN	OAKWOOD SCHOOL INC	Oakwood School Inc			
+86	86	1	F11	D       	6C1		150002-E2	150002	PURANN	NAVISTAR INTERNATIONAL CORP	International Truck & Engine Corporation			
+102	102	1	F21	D       	6C1		523652-E1	523652	PURANN	JOHNSON CONTROLS WORLD SERVICE	Pan American Airways Incorporated			
+105	105	1	F21	A       	6C1		556411-E1	556411	PURANN	Raytheon Technologies	United Technologies Corporation			
+105	105	101	F21	A       	6C1		556411-E5	556411	PURANN	Raytheon Technologies	United Technologies Corporation	Change	Deal with A CT	
+
+------------------------------------------------------------------
+ttcloockup
+Trans_Typ_Cd	Erf_Ctgy_Cd	Erf_Ctgy_Item_Cd	Row_Eff_Dt	Row_End_Dt	ERF_Primary_Ind	EASY_Primary_Ind	EASY_FAT_Codes	EASY_FAT_Description	Phoenix_Primary_Ind	Phoenix_Code	Phoenix_Description	Telus_Primary_Ind	Telus_Code
+IC073	CONTRIBS	ERCONTRB	1/1/2001	12/31/9999			CNT	0	Y	100	Employer Contributions		E34
+IC349	CONTRIBS	LNRPYPRN	1/1/2001	12/31/9999	Y		0	LOAN REPAYMENT		101	Variable Transfer		N/A
+IC352	CONTRIBS	LNRPYINT	1/1/2001	12/31/9999	Y		0	LOAN REPAYMENT	Y	101	Variable Transfer		N/A
+TR080	TRNSFRSA	OUTFNDTX	1/1/2007	12/31/9999	Y		TIE	TRANSFER IN		102	Plan Transfer In		N/A
+
 								
 								
 								
