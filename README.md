@@ -1,3 +1,2 @@
 # Blog_Website
 A blog website created in udemy course.
-P_DB_PAYMENT_PAYMENTS_M11_11302024_125245.csv,DB_PAYMENT_DEPOSIT_M11_11302024_125245.csv|TELUS|ERF_DB_TRANS|ERF|198046-E1||M026PD|E01|RECUR|A16689ZQNNMP0010P|2024-12-01|016689|C35|6C1|DS001|DS001||"Invalid SDIO and Transaction Code combination found in the source file"
