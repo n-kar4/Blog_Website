@@ -1,6 +1,6 @@
 # Blog_Website
 A blog website created in udemy course.
--- SQL Query to generate the target dataset
+-- Updated SQL Query for PySpark SQL
 
 WITH payment_with_funding AS (
     SELECT
@@ -9,15 +9,22 @@ WITH payment_with_funding AS (
         TransactionCategory AS SOURCE_TRANSACTION_CATEGORY,
         TransactionCode AS SOURCE_TRANSACTION_CODE,
         AccountFunding,
-        LEFT(AccountFunding, 10) AS SOURCE_ACCT_CNTRCT_NUM,
+        SUBSTRING(AccountFunding, 1, 10) AS SOURCE_ACCT_CNTRCT_NUM,
         SUBSTRING(AccountFunding, 11, 6) AS SOURCE_SDIO,
-        RIGHT(AccountFunding, 3) AS SOURCE_TTC
+        SUBSTRING(AccountFunding, LENGTH(AccountFunding) - 2, 3) AS SOURCE_TTC
     FROM
         payment
 ),
 payment_with_deposit_date AS (
     SELECT
-        p.*,
+        p.PayeeID,
+        p.PaymentID,
+        p.SOURCE_TRANSACTION_CATEGORY,
+        p.SOURCE_TRANSACTION_CODE,
+        p.AccountFunding,
+        p.SOURCE_ACCT_CNTRCT_NUM,
+        p.SOURCE_SDIO,
+        p.SOURCE_TTC,
         d.PaymentDate AS SOURCE_PAYMENT_DATE
     FROM
         payment_with_funding p
@@ -35,7 +42,7 @@ lookup_erf_cntrct AS (
     FROM
         payment_with_deposit_date p
     LEFT JOIN
-        ggloockup g
+        fund_loockup g
     ON
         p.SOURCE_SDIO = g.SDIO_ID
 ),
@@ -47,7 +54,7 @@ lookup_erf_trans_type AS (
     FROM
         lookup_erf_cntrct l
     LEFT JOIN
-        ttcloockup t
+        ttc_loockup t
     ON
         l.SOURCE_TTC = t.Telus_Code AND t.Telus_Primary_Ind = 'Y'
 ),
@@ -55,14 +62,14 @@ error_checks AS (
     SELECT
         *,
         CASE
-            WHEN SOURCE_SDIO <> 'PURANN' AND SUBSTRING(SOURCE_TRANSACTION_CODE, 9, 1) <> 'P' THEN
+            WHEN SOURCE_SDIO != 'PURANN' AND SUBSTRING(SOURCE_TRANSACTION_CODE, 9, 1) != 'P' THEN
                 'Invalid SDIO and Transaction Code combination found in the source file'
             WHEN ERF_CNTRCT_NUM IS NULL THEN
-                'Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file'
+                'Easy Group Account ID to ERF CNTRCT_NUM translation not found in the fund_loockup file'
             WHEN ERF_FUND_ID IS NULL THEN
-                'SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file'
+                'SDIO ID to ERF Fund ID translation not found in the fund_loockup file'
             WHEN ERF_TRANS_TYPE_CODE IS NULL THEN
-                'Telus Code to ERF Trans Type Code translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file'
+                'Telus Code to ERF Trans Type Code translation not found in the ttc_loockup file'
             ELSE NULL
         END AS ERROR_DESCRIPTION
     FROM
@@ -88,9 +95,8 @@ SELECT
     NULL AS ERROR_CODE,
     ERROR_DESCRIPTION
 FROM
-    error_checks
-WHERE
-    ERROR_DESCRIPTION IS NULL OR ERROR_DESCRIPTION IS NOT NULL;
+    error_checks;
+
 
 
 	=--------------------------
