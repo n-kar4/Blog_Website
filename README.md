@@ -194,30 +194,48 @@ FROM
 								
 								-------------------------------------------
 	------------------------------------------------------------
- df_src_1 = spark.sql(''' SELECT DISTINCT 
+df_src_1 = spark.sql('''
+SELECT DISTINCT 
     split_part(pay.AccountFunding, '.', 1) AS SOURCE_ACCT_CNTRCT_NUM,
     split_part(pay.AccountFunding, '.', 2) AS SOURCE_SDIO,
     split_part(pay.AccountFunding, '.', 3) AS SOURCE_TTC,
     TRIM(pay.TransactionCategory) AS SOURCE_TRANSACTION_CATEGORY,
     TRIM(pay.TransactionCode) AS SOURCE_TRANSACTION_CODE,
-    fl.cntrct_num as ERF_CNTRCT_NUM,
-    fl.CNTRCT_TYP_CD as ERF_CNTRCT_TYP_CD,
-    fl.fund_id as ERF_FUND_ID,
-    ttcl.trans_Typ_Cd,
-    'Invalid SDIO and Transaction Code combination found in the source file' AS ERROR_DESCRIPTION
+    fl.cntrct_num AS ERF_CNTRCT_NUM,
+    fl.CNTRCT_TYP_CD AS ERF_CNTRCT_TYP_CD,
+    fl.fund_id AS ERF_FUND_ID,
+    ttcl.trans_Typ_Cd AS ERF_TRANS_TYPE_CODE,
+    CASE
+        WHEN split_part(pay.AccountFunding, '.', 2) != 'PURANN' AND SUBSTR(TRIM(pay.TransactionCode), 9, 1) != 'P' THEN 
+            'Invalid SDIO and Transaction Code combination found in the source file'
+        WHEN fl.cntrct_num IS NULL THEN 
+            'Easy Group Account ID to ERF CNTRCT_NUM translation not found in the fund_lookup file'
+        WHEN fl.fund_id IS NULL THEN 
+            'SDIO ID to ERF Fund ID translation not found in the fund_lookup file'
+        WHEN ttcl.trans_Typ_Cd IS NULL THEN 
+            'Telus Code to ERF Trans Type Code translation not found in the ttc_lookup file'
+        ELSE 
+            NULL
+    END AS ERROR_DESCRIPTION
 FROM 
     payment pay
 JOIN 
-    deposit dep ON dep.PayeeID = pay.PayeeID AND dep.PaymentID = pay.PaymentID
+    deposit dep 
+    ON dep.PayeeID = pay.PayeeID AND dep.PaymentID = pay.PaymentID
 LEFT JOIN 
-    fund_lookup fl ON fl.easy_group_account_id = split_part(pay.AccountFunding, '.', 1)
+    fund_lookup fl 
+    ON fl.easy_group_account_id = split_part(pay.AccountFunding, '.', 1)
 LEFT JOIN 
-    ttc_lookup ttcl on ttcl.telus_code = split_part(pay.AccountFunding, '.', 3) and ttcl.Phoenix_Primary_Ind="Y"
+    ttc_lookup ttcl 
+    ON ttcl.telus_code = split_part(pay.AccountFunding, '.', 3) 
+    AND ttcl.Phoenix_Primary_Ind = 'Y'
 WHERE 
     pay.TransactionType = 'A' 
-    AND SUBSTR(TRIM(pay.TransactionCode), 9, 1) != 'P' 
-    AND split_part(pay.AccountFunding, '.', 2) != 'PURANN';
- ''')
-								
+    AND (
+        split_part(pay.AccountFunding, '.', 2) != 'PURANN' 
+        OR SUBSTR(TRIM(pay.TransactionCode), 9, 1) != 'P'
+    )
+''')
+							
 
 					
