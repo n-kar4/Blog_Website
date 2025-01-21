@@ -1,78 +1,569 @@
- if (c == 'ERROR_DESCRIPTION'):
-        
-        test_case_number='31'
-        
-        # SOURCE_ACCT_CNTRCT_NUM|SOURCE_SDIO|SOURCE_TTC|SOURCE_TRANSACTION_CATEGORY|SOURCE_TRANSACTION_CODE|ERF_CNTRCT_NUM|ERF_CNTRCT_TYP_CD|ERF_FUND_ID|ERF_TRANS_TYPE_CODE|ERROR_DESCRIPTION
-        
-        print("Data Count Validation between source and Target")
-        spark.sql('''select distinct trim(s.SOURCE_ACCT_CNTRCT_NUM), trim(s.SOURCE_SDIO), trim(s.SOURCE_TTC), trim(s.SOURCE_TRANSACTION_CATEGORY), trim(s.SOURCE_TRANSACTION_CODE),
-                    trim(s.ERF_CNTRCT_NUM), trim(s.ERF_CNTRCT_TYP_CD), trim(s.ERF_FUND_ID), trim(s.ERF_TRANS_TYPE_CODE), trim(s.ERROR_DESCRIPTION) from srcdata s
-                    except
-                    select distinct trim(t.SOURCE_ACCT_CNTRCT_NUM), trim(t.SOURCE_SDIO), trim(t.SOURCE_TTC), trim(t.SOURCE_TRANSACTION_CATEGORY), trim(t.SOURCE_TRANSACTION_CODE),
-                    trim(t.ERF_CNTRCT_NUM), trim(t.ERF_CNTRCT_TYP_CD), trim(t.ERF_FUND_ID), trim(t.ERF_TRANS_TYPE_CODE), trim(t.ERROR_DESCRIPTION) from tgtdata t  ''').show(truncate=0)
-        
-        test_case_count=str(spark.sql('''select count(*) from (select distinct trim(s.SOURCE_ACCT_CNTRCT_NUM), trim(s.SOURCE_SDIO), trim(s.SOURCE_TTC), trim(s.SOURCE_TRANSACTION_CATEGORY), trim(s.SOURCE_TRANSACTION_CODE),
-                    trim(s.ERF_CNTRCT_NUM), trim(s.ERF_CNTRCT_TYP_CD), trim(s.ERF_FUND_ID), trim(s.ERF_TRANS_TYPE_CODE), trim(s.ERROR_DESCRIPTION) from srcdata s
-                    except
-                    select distinct trim(t.SOURCE_ACCT_CNTRCT_NUM), trim(t.SOURCE_SDIO), trim(t.SOURCE_TTC), trim(t.SOURCE_TRANSACTION_CATEGORY), trim(t.SOURCE_TRANSACTION_CODE),
-                    trim(t.ERF_CNTRCT_NUM), trim(t.ERF_CNTRCT_TYP_CD), trim(t.ERF_FUND_ID), trim(t.ERF_TRANS_TYPE_CODE), trim(t.ERROR_DESCRIPTION) from tgtdata t ) ''').collect()[0][0])
-        
-        passed_recs=int(totalrecs)-int(test_case_count)
-        
-        print ('Test case number====' + str(test_case_number) + 'Failure record count====' + str(test_case_count))
-        
-        if (int(test_case_count)>0):
-            teststatus = "Fail"
-        else:
-            teststatus = "Pass"
-        
-        if (int(test_case_count)>0):
-            
-            #print("source to target missing payeeid")
-            
-            spark.sql('''select distinct trim(s.SOURCE_ACCT_CNTRCT_NUM), trim(s.SOURCE_SDIO), trim(s.SOURCE_TTC), trim(s.SOURCE_TRANSACTION_CATEGORY), trim(s.SOURCE_TRANSACTION_CODE),
-                    trim(s.ERF_CNTRCT_NUM), trim(s.ERF_CNTRCT_TYP_CD), trim(s.ERF_FUND_ID), trim(s.ERF_TRANS_TYPE_CODE), trim(s.ERROR_DESCRIPTION) from srcdata s
-                    except
-                    select distinct trim(t.SOURCE_ACCT_CNTRCT_NUM), trim(t.SOURCE_SDIO), trim(t.SOURCE_TTC), trim(t.SOURCE_TRANSACTION_CATEGORY), trim(t.SOURCE_TRANSACTION_CODE),
-                    trim(t.ERF_CNTRCT_NUM), trim(t.ERF_CNTRCT_TYP_CD), trim(t.ERF_FUND_ID), trim(t.ERF_TRANS_TYPE_CODE), trim(t.ERROR_DESCRIPTION) from tgtdata t ''').show(truncate=0)
-                    
-            error_data.extend(spark.sql("select concat("+test_case_number+", '|',SOURCE_ACCT_CNTRCT_NUM, '|', SOURCE_SDIO, '|', SOURCE_TTC, '|', SOURCE_TRANSACTION_CODE,'|', ERROR_DESCRIPTION, '|', "+c+", '|', '"+c+"'                         ) as Res from tgtdata group by "+ c +" , SOURCE_ACCT_CNTRCT_NUM, SOURCE_SDIO, SOURCE_TTC,SOURCE_TRANSACTION_CODE, ERROR_DESCRIPTION having count(1) > 1 ".format(c)+ "limit 100").rdd.flatMap(lambda x:x).collect())
-                
-        txt = return_testcase_res(test_case_number,totalrecs,c,'85-100','NA',str(passed_recs),str(test_case_count),teststatus,'Data Count Validation between source and Target')
-        
-        fwf_data.append(txt)
-        
+SOURCE_ACCT_CNTRCT_NUM	SOURCE_SDIO	SOURCE_TTC	SOURCE_TRANSACTION_CATEGORY	SOURCE_TRANSACTION_CODE	ERF_CNTRCT_NUM	ERF_CNTRCT_TYP_CD	ERF_FUND_ID	ERF_TRANS_TYPE_CODE	ERROR_DESCRIPTION
+140067-E1	V025PD	E01	RECUR	Z17562ZQNNMP0003P	17562	C35	20	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524842-E1	A403PD	E01	RECUR	Z17498ZQNNMP0590P	17498	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523366-E4	A441PD	E01	RECUR	Z17222ZQNNMD0060D	17222	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-E3	A414PD	R01	RECUR	C16102ZQNXMP0369P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+762400-E1	S217PD	E01	RECUR	Z17550ZQNNMP0800P	17550	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524710-E2	A415PD	E01	RECUR	Z17302ZQNNMD0576D	17302	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556411-E3	Z810PD	E01	RECUR	Z17530ZNNNMP0699E	17530	C38	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523621-E1	A382PD	E01	RECUR	Z16672ZQNNMP0345P	16672	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523426-E1	A356PD	E01	RECUR	M02174ZQGNMP0118P	M02174	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-EB	A467PD	R01	RECUR	L16102ZQNXMP0377P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523641-E7	A462PD	R01	RECUR	H16102ZQNXMP0373P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523827-E1	A342PD	E01	RECUR	Z17184ZQGNMP0530P	17184	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524805-E2	A411PD	E01	RECUR	Z16687ZQNNMP0584P	16687	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-E4	A443PD	R01	RECUR	D16102ZQNXMP0370P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523727-E1	A417PD	R01	RECUR	M01123ZQGXMP0460P	M01123	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556850-E1	Z762PD	E01	RECUR	Z16061ZQNNMP0779P	16061	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523927-E2	A464PD	E01	RECUR	Z17157ZQNNCP0560P	17157	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556008-EL	Z793PD	E01	RECUR	Z17284ZQNNMP0623P	17284	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556382-E1	Z631PD	E01	RECUR	Z16926ZQNNMP0679P	16926	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+745018-E2	S209PD	E01	RECUR	Z17421ZQNNMP0796P	17421	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523678-E2	A409PD	E01	RECUR	Z15541ZQNNMP0422P	15541	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+743448-E2	S196PD	R01	RECUR	Z16765ZQGXMP0789P	16765	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556042-E4	Z650PD	E01	RECUR	Z17081ZNNNMP0649E	17081	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-E1	A355PD	R01	RECUR	A16102ZQNXMP0367P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556008-EL	Z793PD	R01	RECUR	Z17284ZQNXMP0623P	17284	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523791-E1	A423PD	E01	RECUR	Z04005ZQGNMP0514P	4005	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523439-E1	A463PD	E01	RECUR	M00540ZQNNMP0130P	M00540	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523426-E1	A356PD	R01	RECUR	M02174ZQGXMP0118P	M02174	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556397-E1	Z729PD	E01	RECUR	Z00571ZQNNMP0685P	M00571	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+933201-E1	H095PD	E01	RECUR	Z03508ZQNNMP0810P	M03508	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556032-E7	Z724PD	E01	RECUR	Z16992ZQNNMD0647D	16992	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556407-E1	Z678PD	E01	RECUR	Z17409ZQNNMD0694D	17409	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+743448-E1	S205PD	R01	RECUR	Z16764ZQGXMP0788P	16764	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523631-E1	A440PD	R01	RECUR	Z03682ZQGXMP0358P	3682	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+765492-E1	S204PD	E01	RECUR	Z15324ZQNNMP0801P	15324	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523819-E1	A442PD	E01	RECUR	Z15520ZQNNMP0528P	15520	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+745018-E1	S201PD	E01	RECUR	Z15769ZQNNMP0795P	15769	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+88075-E1	V041PD	R01	RECUR	Z17109ZQNXMP0809P	17109	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556404-E1	Z725PD	E01	RECUR	M01220ZQNNMP0691P	M01220	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-E5	A406PD	R01	RECUR	F16102ZQNXMP0371P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+524805-E1	A456PD	E01	RECUR	Z16075ZQNNMP0583P	16075	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556405-E1	Z780PD	E01	RECUR	A16795ZQGNMP0692P	16795	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+150028-E1	J074PD	E01	RECUR	Z01495ZQNNMP0005P	1495	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523469-E1	A452PD	E01	RECUR	Z16728ZQNNMP0167P	16728	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523490-E1	A373PD	E01	RECUR	Z01602ZQGNMP0192P	1602	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523361-E1	A385PD	E01	RECUR	Z17529ZQNNMP0050P	17529	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+385067-E5	H091PD	E01	RECUR	Z17526ZNNNMP0023E	17526	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556008-EN	Z174PD	E01	RECUR	Z17543ZQNNMP0625P	17543	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523366-E4	A441PD	E01	RECUR	Z17222ZQNNMP0060P	17222	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523773-E2	A345PD	E01	RECUR	Z16493ZQNNMP0504P	16493	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556032-E7	Z724PD	E01	RECUR	Z16992ZQNNMP0647P	16992	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+743448-E2	S196PD	E01	RECUR	Z16765ZQGNMD0789D	16765	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523428-E1	A401PD	E01	RECUR	Z17188ZQNNMP0120P	17188	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556390-E1	Z801PD	E01	RECUR	Z15192ZQNNMP0682P	15192	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+743448-E2	S196PD	E01	RECUR	Z16765ZQGNMP0789P	16765	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+743448-E1	S205PD	E01	RECUR	Z16764ZQGNMP0788P	16764	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556801-E1	Z643PD	E01	RECUR	Z16916ZNNNMP0759E	16916	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523481-E1	A363PD	E01	RECUR	Z15851ZQNNMP0182P	15851	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523637-E1	A398PD	E01	RECUR	Z15049ZQNNMP0364P	15049	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556451-E1	Z755PD	E01	RECUR	Z17125ZQNNMP0720P	17125	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523884-E2	A404PD	E01	RECUR	Z03804ZQNNMD0546D	3804	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523485-E1	A458PD	E01	RECUR	M03290ZQGNMP0185P	M03290	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523439-E1	A463PD	E01	RECUR	M00540ZQNNMD0130D	M00540	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524704-E3	A387PD	E01	RECUR	Z17315ZQNNMP0572P	17315	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523676-E1	A380PD	E01	RECUR	M01234ZQNNMD0419D	M01234	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556390-E2	Z718PD	E01	RECUR	Z16599ZQNNMP0683P	16599	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556841-E2	Z654PD	E01	RECUR	Z17570ZNNNMP0774E	17570	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523678-E1	A434PD	E01	RECUR	Z15540ZQNNMD0421D	15540	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556008-EL	Z793PD	E01	RECUR	Z17284ZQGNMP0623P	17284	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523648-E1	A368PD	E01	RECUR	Z15938ZQNNMP0382P	15938	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556016-E3	Z626PD	E01	RECUR	Z17114ZQNNMD0635D	17114	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+744108-E1	S208PD	E01	RECUR	Z15457ZQNNMP0792P	15457	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523561-E1	A361PD	E01	RECUR	Z15251ZQNNMP0275P	15251	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+150028-E1	J074PD	E01	RECUR	Z01495ZQNNMD0005D	1495	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523727-E1	A417PD	R01	RECUR	M01123ZQNXMP0460P	M01123	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523395-E1	A470PD	E01	RECUR	M00156ZQNNMD0082D	M00156	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523601-E1	A412PD	E01	RECUR	Z15525ZQNNMP0323P	15525	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523678-E2	A409PD	E01	RECUR	Z15541ZQNNMD0422D	15541	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523887-E2	A453PD	E01	RECUR	Z17096ZNNNMP0548E	17096	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523366-E5	A428PD	E01	RECUR	Z17147ZNNNMP0061E	17155	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556060-E9	Z697PD	E01	RECUR	Z17333ZNNNMP0650E	17333	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556008-EJ	Z668PD	R01	RECUR	Z04758ZNNXMP0619E	4758	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523749-E1	A405PD	E01	RECUR	Z04174ZQGNMP0482P	4174	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+743448-E2	S196PD	E01	RECUR	Z16765ZQNNMD0789D	16765	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556452-E1	Z669PD	E01	RECUR	Z17173ZNNNMP0721E	17173	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523753-E1	A437PD	E01	RECUR	Z16374ZQGNMP0487P	16374	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523876-E1	A392PD	E01	RECUR	Z17097ZQNNMP0542P	17097	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556008-EL	Z793PD	R01	RECUR	Z17284ZQGXMP0623P	17284	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523621-E1	A382PD	E01	RECUR	Z16672ZQNNMD0345D	16672	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523369-E2	A454PD	E01	RECUR	B16729ZQGNMP0065P	16729	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523752-E1	A413PD	R01	RECUR	M02365ZQGXMP0486P	2365	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523752-E1	A413PD	R01	RECUR	M02365ZQNXMP0486P	2365	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523825-E1	A374PD	E01	RECUR	Z16655ZNNNMP0529E	16635	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-E9	A459PD	R01	RECUR	J16102ZQNXMP0375P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523753-E1	A437PD	R01	RECUR	Z16374ZQGXMP0487P	16374	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523369-E1	A427PD	E01	RECUR	A16729ZQGNMP0064P	16729	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556019-E7	Z751PD	E01	RECUR	Z17286ZNNNMP0638E	17286	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556008-EM	Z744PD	E01	RECUR	Z17284ZQNNMP0624P	17364	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523773-E1	A426PD	E01	RECUR	Z16490ZQNNMP0503P	16490	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556588-E1	Z701PD	E01	RECUR	Z17453ZNNNMP0743E	17453	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556703-E1	Z782PD	E01	RECUR	A17368ZQNNMP0752P	17368	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556014-E8	Z633PD	E01	RECUR	Z17238ZNNNMP0630E	17238	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556801-E2	Z770PD	E01	RECUR	Z17126ZNNNMP0760E	17126	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+198046-E1	M026PD	E01	RECUR	A16689ZQNNMP0010P	16689	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524710-E1	A451PD	E01	RECUR	Z17301ZQNNMP0574P	17301	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+743448-E2	S196PD	E01	RECUR	Z16765ZQNNMP0789P	16765	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+780253-E2	S215PD	E01	RECUR	B17549ZQNNMP0804P	17549	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556014-E7	Z743PD	E01	RECUR	Z17076ZNNNMP0629E	17076	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-E2	A430PD	R01	RECUR	B16102ZQNXMP0368P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523434-E1	A367PD	E01	RECUR	Z17424ZQNNMP0126P	17424	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-E8	A370PD	R01	RECUR	I16102ZQNXMP0374P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523470-E1	A419PD	E01	RECUR	Z16718ZQGNMP0168P	16718	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523395-E1	A470PD	E01	RECUR	M00156ZQGNMP0082P	M00156	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+150028-E1	J074PD	E01	RECUR	Z01495ZQGNMP0005P	1495	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523837-E1	A444PD	E01	RECUR	Z16967ZQNNMD0534D	16967	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523428-E1	A401PD	E01	RECUR	Z17188ZQGNMP0120P	17188	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+745018-E2	S209PD	E01	RECUR	Z17421ZQGNMP0796P	17421	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+745018-E1	S201PD	E01	RECUR	Z15769ZQGNMP0795P	15769	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556405-E2	Z700PD	E01	RECUR	B16795ZQNNMP0693P	16795	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523395-E1	A470PD	E01	RECUR	M00156ZQNNMP0082P	M00156	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523469-E1	A452PD	E01	RECUR	Z16728ZQGNMP0167P	16728	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523485-E1	A458PD	E01	RECUR	M03290ZQNNMP0185P	M03290	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524743-E1	A450PD	E01	RECUR	Z17335ZQNNMD0582D	17335	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556397-E1	Z729PD	R01	RECUR	Z00571ZQGXMP0685P	M00571	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+765492-E1	S204PD	E01	RECUR	Z15324ZQNNMD0801D	15324	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523601-E1	A412PD	R01	RECUR	Z15525ZQGXMP0323P	15525	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556802-E4	Z679PD	E01	RECUR	Z17571ZNNNMP0772E	17571	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556008-EL	Z793PD	E01	RECUR	Z17364ZQNNMP0623P	17284	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556588-E2	Z757PD	E01	RECUR	Z17455ZNNNMP0744E	17455	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523819-E1	A442PD	E01	RECUR	Z15520ZQGNMP0528P	15520	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+525344-E1	A371PD	E01	RECUR	Z00791ZQGNMP0605P	791	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524710-E2	A415PD	E01	RECUR	Z17302ZQNNMP0576P	17302	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+745018-E1	S201PD	R01	RECUR	Z15769ZQGXMP0795P	15769	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523366-E4	A441PD	R01	RECUR	Z17222ZQNXMD0060D	17222	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523466-E1	A469PD	E01	RECUR	Z04762ZNGNMP0160E	4762	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+780253-E1	S211PD	E01	RECUR	A17549ZQNNMP0803P	17549	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556405-E2	Z700PD	E01	RECUR	B16795ZQNNMD0693D	16795	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523752-E1	A413PD	E01	RECUR	M02365ZQGNMP0486P	2365	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+85195-E1	V042PD	E01	RECUR	Z16219ZQNNMP0808P	16219	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523911-E1	A429PD	E01	RECUR	Z03201ZQGNMP0555P	M03201	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523884-E2	A404PD	E01	RECUR	Z03804ZQNNMP0546P	3804	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523471-E1	A384PD	E01	RECUR	Z15562ZQGNMP0169P	15562	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523382-E1	A393PD	E01	RECUR	A15236ZQNNMP0073P	15236	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523395-E1	A470PD	R01	RECUR	M00156ZQGXMP0082P	M00156	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556016-E3	Z626PD	E01	RECUR	Z17114ZQGNMP0635P	17114	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523676-E1	A380PD	E01	RECUR	M01234ZQNNMP0419P	M01234	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523659-E1	A460PD	E01	RECUR	Z03863ZQNNMD0397D	3863	C22	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523887-E1	A399PD	E01	RECUR	Z17090ZQNNMP0547P	17090	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556441-E1	Z698PD	E01	RECUR	Z17088ZQNNMP0716P	17088	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556641-E1	Z781PD	E01	RECUR	Z17177ZQNNMP0749P	17177	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523678-E1	A434PD	E01	RECUR	Z15540ZQNNMP0421P	15540	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556383-E1	Z662PD	E01	RECUR	Z17381ZQGNMP0680P	17381	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523366-E4	A441PD	E01	RECUR	Z17222ZQGNMD0060D	17222	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523371-E1	A424PD	E01	RECUR	Z15247ZQGNMP0067P	15247	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556405-E2	Z700PD	E01	RECUR	B16795ZQGNMP0693P	16795	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523719-E1	A344PD	E01	RECUR	Z04001ZQGNMP0452P	4001	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523727-E1	A417PD	R01	RECUR	M01123ZQGXMD0460D	M01123	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523727-E1	A417PD	R01	RECUR	M01123ZQNXMD0460D	M01123	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+88075-E1	V041PD	E01	RECUR	Z17109ZQNNMP0809P	17109	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524710-E1	A451PD	E01	RECUR	Z17301ZQNNMD0574D	17301	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556249-E1	Z630PD	E01	RECUR	Z16902ZQNNMP0669P	16902	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556382-E1	Z631PD	E01	RECUR	Z16926ZQGNMP0679P	16926	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556404-E1	Z725PD	E01	RECUR	M01220ZQNNMD0691D	M01220	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523621-E1	A382PD	E01	RECUR	Z16672ZQGNMP0345P	16672	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523676-E1	A380PD	E01	RECUR	M01234ZQGNMP0419P	M01234	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523369-E1	A427PD	E01	RECUR	A16729ZQNNMP0064P	16729	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523601-E1	A412PD	E01	RECUR	Z15525ZQGNMP0323P	15525	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523753-E1	A437PD	E01	RECUR	Z16374ZQNNMP0487P	16374	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+198046-E1	M026PD	E01	RECUR	A16689ZQNNMD0010D	16689	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556382-E1	Z631PD	E01	RECUR	Z16926ZQNNMD0679D	16926	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556028-E3	Z683PD	E01	RECUR	Z16798ZNNNMP0641E	16798	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523892-E1	A400PD	E01	RECUR	Z17074ZQNNMP0549P	17074	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+88075-E1	V041PD	R01	RECUR	Z17109ZQGXMP0809P	17109	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523366-E4	A441PD	R01	RECUR	Z17222ZQGXMP0060P	17222	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523366-E4	A441PD	R01	RECUR	Z17222ZQNXMP0060P	17222	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556439-E3	Z769PD	E01	RECUR	Z16946ZNNNMP0715E	16946	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556405-E1	Z780PD	E01	RECUR	A16795ZQNNMP0692P	16795	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523369-E2	A454PD	E01	RECUR	B16729ZQNNMP0065P	16729	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+525344-E1	A371PD	E01	RECUR	Z00791ZQNNMP0605P	791	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523631-E1	A440PD	R01	RECUR	Z03682ZQNXMP0358P	3682	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523466-E3	A381PD	E01	RECUR	Z16903ZQNNMP0161P	16903	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523361-E1	A385PD	E01	RECUR	Z17529ZQGNMP0050P	17529	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556452-E3	Z791PD	E01	RECUR	B17163ZQNNMP0724P	17163	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523927-E1	A372PD	E01	RECUR	Z17156ZQNNMP0559P	17156	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523366-E4	A441PD	R01	RECUR	Z17222ZQGXMD0060D	17222	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523927-E2	A464PD	E01	RECUR	Z17157ZQNNMP0560P	17157	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556397-E1	Z729PD	E01	RECUR	Z00571ZQGNMP0685P	M00571	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523827-E1	A342PD	E01	RECUR	Z17184ZQNNMP0530P	17184	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556016-E4	Z737PD	E01	RECUR	A17114ZQNNMP0636P	17114	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556028-E3	Z683PD	E01	RECUR	B16784ZNNNMP0641E	16798	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523752-E1	A413PD	E01	RECUR	M02365ZQNNMP0486P	2365	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523676-E1	A380PD	R01	RECUR	M01234ZQGXMP0419P	M01234	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523927-E2	A464PD	E01	RECUR	Z17157ZQNNMD0560D	17157	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523366-E4	A441PD	E01	RECUR	Z17222ZQGNMP0060P	17222	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556016-E3	Z626PD	E01	RECUR	Z17114ZQNNMP0635P	17114	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523466-E3	A381PD	E01	RECUR	Z16903ZQGNMP0161P	16903	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523371-E1	A424PD	E01	RECUR	Z15247ZQNNMP0067P	15247	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523704-E1	A439PD	E01	RECUR	M00350ZQNNMP0445P	M00350	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523884-E2	A404PD	E01	RECUR	Z03804ZQGNMP0546P	3804	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-E6	A377PD	R01	RECUR	G16102ZQNXMP0372P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523825-E1	A374PD	E01	RECUR	Z16635ZNNNMP0529E	16635	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523799-E1	A446PD	E01	RECUR	A16494ZQGNMP0519P	16494	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556850-E1	Z762PD	R01	RECUR	Z16061ZQGXMP0779P	16061	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523490-E1	A373PD	R01	RECUR	Z01602ZQGXMP0192P	1602	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523837-E1	A444PD	E01	RECUR	Z16967ZQNNMP0534P	16967	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523749-E1	A405PD	R01	RECUR	Z04174ZQGXMP0482P	4174	C31	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+556723-E2	Z687PD	E01	RECUR	Z17407ZNNNMP0755E	17407	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556342-E4	Z772PD	E01	RECUR	Z17092ZNNNMP0677E	17092	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+88075-E1	V041PD	E01	RECUR	Z17109ZQGNMP0809P	17109	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+765492-E1	S204PD	E01	RECUR	Z15324ZQGNMP0801P	15324	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524743-E1	A450PD	E01	RECUR	Z17335ZQNNMP0582P	17335	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523439-E1	A463PD	E01	RECUR	M00540ZQGNMP0130P	M00540	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523444-E1	A349PD	E01	RECUR	Z15307ZQNNMP0131P	15307	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523471-E1	A384PD	E01	RECUR	Z15562ZQNNMP0169P	15562	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+524710-E3	A397PD	E01	RECUR	Z17303ZQNNMP0578P	17303	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523887-E2	A453PD	E01	RECUR	Z17090ZNNNMP0548E	17096	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556407-E1	Z678PD	E01	RECUR	Z17409ZQNNMP0694P	17409	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556019-E9	Z766PD	E01	RECUR	Z17341ZNNNMP0640E	17341	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+745266-E1	S199PD	E01	RECUR	Z16604ZQNNMP0797P	16604	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556245-ED	Z710PD	E01	RECUR	D17356ZNNNMP0668E	17356	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+744108-E1	S208PD	E01	RECUR	Z15457ZQNNMD0792D	15457	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556850-E1	Z762PD	E01	RECUR	Z16061ZQGNMP0779P	16061	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523641-EA	A358PD	R01	RECUR	K16102ZQNXMP0376P	16102	C35	6C1	DSXXA	Invalid SDIO and Transaction Code combination found in the source file
+523884-E1	A445PD	E01	RECUR	Z03676ZQGNMP0545P	3676	C31	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523434-E1	A367PD	E01	RECUR	Z17424ZQGNMP0126P	17424	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+743448-E1	S205PD	E01	RECUR	Z16764ZQNNMP0788P	16764	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523444-E1	A349PD	E01	RECUR	Z15307ZQGNMP0131P	15307	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556452-E3	Z791PD	E01	RECUR	B17163ZQNNMD0724D	17163	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+745018-E1	S201PD	E01	RECUR	Z15769ZQNNMD0795D	15769	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+556703-E1	Z782PD	E01	RECUR	A17368ZQNNMD0752D	17368	C35	6C1	DS001	Invalid SDIO and Transaction Code combination found in the source file
+523665-E1	PURANN	R05	RECUR	Z06004RQPXMP0404P	6004	F61	6C2		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E1	PURANN	R05	RECUR	Z00105RQPXMP0695P	105	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+150002-E2	PURANN	R05	RECUR	Z00086RQPXMP0004P	86	F11	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E1	PURANN	E05	RECUR	Z00105RQPNMP0696P	105	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+523534-E1	PURANN	R05	RECUR	A04730RQPXMP0241P	4730	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E7	PURANN	R05	RECUR	Z04350RQPXMP0702P	4350	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E2	PURANN	E05	RECUR	Z04350RQPNMP0697P	4350	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+523781-E1	PURANN	R06	RECUR	M00308SQPXMP0505P	M00308	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+150563-E1	PURANN	R05	RECUR	Z17063RQPXMP0006P	17063	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E5	PURANN	E05	RECUR	Z00105RQPNMP0701P	105	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+523668-E1	PURANN	R05	RECUR	M00277RQPXMP0408P	M00277	F11	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E7	PURANN	E05	RECUR	Z04350RQPNMP0702P	4350	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E5	PURANN	R05	RECUR	Z00105RQPXMP0700P	105	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+150002-E2	PURANN	R05	RECUR	Z00086RQPXEP0004P	86	F11	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+523883-E1	PURANN	E05	RECUR	Z16913RQPNMP0543P	16913	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E2	PURANN	R05	RECUR	Z04350RQPXMP0697P	4350	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+523534-E1	PURANN	E05	RECUR	A04730RQPNMP0241P	4730	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E1	PURANN	E05	RECUR	Z00105RQPNMP0695P	105	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+556411-E5	PURANN	E05	RECUR	Z00105RQPNMP0700P	105	F21	6C1		Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes filee
+557349-E2	PURANN	R01	RECUR	A07671ZQPXMP0781P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+523557-E1	PURANN	R01	RECUR	Z00467ZQPXMP0272P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+524953-E6	PURANN	R01	RECUR	D29201ZQPXMP0599P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	Z07614ZQPXMP0783P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	Z11429ZQPXMP0783P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+523557-E1	PURANN	E01	RECUR	Z00467ZQPNMP0272P				DS001	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A85313ZQPXMP0781P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	E37063ZQPXMP0783P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	E11472ZNPXMP0783E				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	Z10753ZQPXMP0783P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	E11472ZQPXMP0783P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A07615ZQPXMP0782P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	E10867ZQPXMP0783P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+524953-E5	PURANN	R01	RECUR	C29201ZQPXMP0598P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A07615ZQPXMP0781P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A00137ZQPXMP0781P				DSXXA	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	E01	RECUR	E37063ZQPNMP0783P				DS001	Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+523557-E1	PURANN	R01	RECUR	Z00467ZQPXMP0272P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A00137ZQPXMP0781P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A85313ZQPXMP0781P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	Z11429ZQPXMP0783P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	Z07614ZQPXMP0783P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	E37063ZQPXMP0783P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	E01	RECUR	E37063ZQPNMP0783P				DS001	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	Z10753ZQPXMP0783P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	E10867ZQPXMP0783P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A07615ZQPXMP0781P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	E11472ZQPXMP0783P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+524953-E5	PURANN	R01	RECUR	C29201ZQPXMP0598P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A07615ZQPXMP0782P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E3	PURANN	R01	RECUR	E11472ZNPXMP0783E				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+524953-E6	PURANN	R01	RECUR	D29201ZQPXMP0599P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+523557-E1	PURANN	E01	RECUR	Z00467ZQPNMP0272P				DS001	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+557349-E2	PURANN	R01	RECUR	A07671ZQPXMP0781P				DSXXA	SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
 
-# saving the test report ".txt" file to s3
-try:
-    
-    print("saving......")        
-    
-    s3Client=boto3.client('s3')
 
-
-    if rectype == 'd':
-        print("save details records")
-        
-        s3Client.put_object(Body='\n'.join(fwf_data), Bucket=tgt_bucket, Key=tgt_key+f'ERF9_Detail_Record_TestResult_{date_file}.TXT')
-        
-        print("save details records end")
-        
-        if len(error_data) > 0:
-            
-            print("details records errors start here")
-            print(error_data)
-            s3Client.put_object(Body='\n'.join(error_data), Bucket=tgt_bucket, Key=tgt_key+f'ERF9_Detail_Record_TestResult_Failures_{date_file}.TXT')
-        
-            print("details records errors end here")
-            
-    if rectype == 't':
-        print(type(fwf_data))
-        print(fwf_data)
-        s3Client.put_object(Body='\n'.join(fwf_data), Bucket=tgt_bucket, Key=tgt_key+f'ERF9_Trailer_Record_RestResult_{date_file}.TXT')
-        
-        if len(error_data) > 0:
-            s3Client.put_object(Body='\n'.join(error_data), Bucket=tgt_bucket, Key=tgt_key+f'ERF9_Trailer_Record_TestResult_Failure_Recs_{date_file}.txt')
-        
-
-        
+	SOURCE_FILE_NAME	SOURCE_SYSTEM	OUTBOUND_FILE_NAME	TARGET_SYSTEM	SOURCE_ACCT_CNTRCT_NUM	SOURCE_FUND_ID	SOURCE_SDIO	SOURCE_TTC	SOURCE_TRANSACTION_CATEGORY	SOURCE_TRANSACTION_CODE	SOURCE_PAYMENT_DATE	ERF_CNTRCT_NUM	ERF_CNTRCT_TYP_CD	ERF_FUND_ID	ERF_TRANS_TYPE_CODE	ERF_ORIG_TTC	ERROR_CODE	ERROR_DESCRIPTION
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523665-E1		PURANN	R05	RECUR	Z06004RQPXMP0404P	12/1/2024	6004	F61	6C2				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	743448-E1		S205PD	E01	RECUR	Z16764ZQGNMP0788P	12/1/2024	16764	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523371-E1		A424PD	E01	RECUR	Z15247ZQNNMP0067P	12/1/2024	15247	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E4		A441PD	E01	RECUR	Z17222ZQGNMP0060P	12/1/2024	17222	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556405-E1		Z780PD	E01	RECUR	A16795ZQGNMP0692P	12/1/2024	16795	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523469-E1		A452PD	E01	RECUR	Z16728ZQGNMP0167P	12/1/2024	16728	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523361-E1		A385PD	E01	RECUR	Z17529ZQNNMP0050P	12/1/2024	17529	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523892-E1		A400PD	E01	RECUR	Z17074ZQNNMP0549P	12/1/2024	17074	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556850-E1		Z762PD	E01	RECUR	Z16061ZQGNMP0779P	12/1/2024	16061	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524953-E6		PURANN	R01	RECUR	D29201ZQPXMP0599P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	150002-E2		PURANN	R05	RECUR	Z00086RQPXMP0004P	12/1/2024	86	F11	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	150002-E2		PURANN	R05	RECUR	Z00086RQPXEP0004P	12/1/2024	86	F11	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524953-E5		PURANN	R01	RECUR	C29201ZQPXMP0598P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523534-E1		PURANN	R05	RECUR	A04730RQPXMP0241P	12/1/2024	4730	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523648-E1		A368PD	E01	RECUR	Z15938ZQNNMP0382P	12/1/2024	15938	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523485-E1		A458PD	E01	RECUR	M03290ZQNNMP0185P	12/1/2024	M03290	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A07671ZQPXMP0781P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	Z10753ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	743448-E2		S196PD	E01	RECUR	Z16765ZQNNMP0789P	12/1/2024	16765	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A07615ZQPXMP0781P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556439-E3		Z769PD	E01	RECUR	Z16946ZNNNMP0715E	11/30/2024	16946	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556016-E4		Z737PD	E01	RECUR	A17114ZQNNMP0636P	12/1/2024	17114	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523884-E2		A404PD	E01	RECUR	Z03804ZQNNMD0546D	12/1/2024	3804	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A85313ZQPXMP0781P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	Z07614ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556405-E2		Z700PD	E01	RECUR	B16795ZQGNMP0693P	12/1/2024	16795	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	745266-E1		S199PD	E01	RECUR	Z16604ZQNNMP0797P	12/1/2024	16604	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524842-E1		A403PD	E01	RECUR	Z17498ZQNNMP0590P	12/1/2024	17498	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E7		PURANN	E05	RECUR	Z04350RQPNMP0702P	12/1/2024	4350	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E2		A430PD	R01	RECUR	B16102ZQNXMP0368P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	765492-E1		S204PD	E01	RECUR	Z15324ZQGNMP0801P	12/1/2024	15324	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A07615ZQPXMP0782P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556382-E1		Z631PD	E01	RECUR	Z16926ZQNNMP0679P	12/1/2024	16926	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556641-E1		Z781PD	E01	RECUR	Z17177ZQNNMP0749P	12/1/2024	17177	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523819-E1		A442PD	E01	RECUR	Z15520ZQGNMP0528P	12/1/2024	15520	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	E37063ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	743448-E2		S196PD	R01	RECUR	Z16765ZQGXMP0789P	12/1/2024	16765	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556032-E7		Z724PD	E01	RECUR	Z16992ZQNNMD0647D	12/1/2024	16992	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523621-E1		A382PD	E01	RECUR	Z16672ZQNNMP0345P	12/1/2024	16672	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556841-E2		Z654PD	E01	RECUR	Z17570ZNNNMP0774E	12/1/2024	17570	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523369-E1		A427PD	E01	RECUR	A16729ZQNNMP0064P	12/1/2024	16729	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523927-E2		A464PD	E01	RECUR	Z17157ZQNNMD0560D	12/1/2024	17157	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523426-E1		A356PD	R01	RECUR	M02174ZQGXMP0118P	12/1/2024	M02174	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523887-E1		A399PD	E01	RECUR	Z17090ZQNNMP0547P	12/1/2024	17090	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E5		PURANN	E05	RECUR	Z00105RQPNMP0700P	12/1/2024	105	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	745018-E2		S209PD	E01	RECUR	Z17421ZQGNMP0796P	12/1/2024	17421	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556390-E2		Z718PD	E01	RECUR	Z16599ZQNNMP0683P	12/1/2024	16599	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523471-E1		A384PD	E01	RECUR	Z15562ZQNNMP0169P	12/1/2024	15562	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556008-EJ		Z668PD	R01	RECUR	Z04758ZNNXMP0619E	12/1/2024	4758	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E6		A377PD	R01	RECUR	G16102ZQNXMP0372P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E4		A441PD	R01	RECUR	Z17222ZQNXMP0060P	12/1/2024	17222	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556441-E1		Z698PD	E01	RECUR	Z17088ZQNNMP0716P	12/1/2024	17088	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556703-E1		Z782PD	E01	RECUR	A17368ZQNNMP0752P	12/1/2024	17368	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556407-E1		Z678PD	E01	RECUR	Z17409ZQNNMP0694P	12/1/2024	17409	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E4		A441PD	R01	RECUR	Z17222ZQGXMP0060P	12/1/2024	17222	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524710-E2		A415PD	E01	RECUR	Z17302ZQNNMD0576D	12/1/2024	17302	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	743448-E2		S196PD	E01	RECUR	Z16765ZQNNMD0789D	12/1/2024	16765	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523927-E2		A464PD	E01	RECUR	Z17157ZQNNMP0560P	12/1/2024	17157	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523369-E2		A454PD	E01	RECUR	B16729ZQGNMP0065P	12/1/2024	16729	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523659-E1		A460PD	E01	RECUR	Z03863ZQNNMD0397D	12/1/2024	3863	C22	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523561-E1		A361PD	E01	RECUR	Z15251ZQNNMP0275P	12/1/2024	15251	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524710-E2		A415PD	E01	RECUR	Z17302ZQNNMP0576P	12/1/2024	17302	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523678-E2		A409PD	E01	RECUR	Z15541ZQNNMD0422D	12/1/2024	15541	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E1		A355PD	R01	RECUR	A16102ZQNXMP0367P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523428-E1		A401PD	E01	RECUR	Z17188ZQNNMP0120P	12/1/2024	17188	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523753-E1		A437PD	E01	RECUR	Z16374ZQGNMP0487P	12/1/2024	16374	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556850-E1		Z762PD	E01	RECUR	Z16061ZQNNMP0779P	12/1/2024	16061	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-EB		A467PD	R01	RECUR	L16102ZQNXMP0377P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523428-E1		A401PD	E01	RECUR	Z17188ZQGNMP0120P	12/1/2024	17188	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523799-E1		A446PD	E01	RECUR	A16494ZQGNMP0519P	12/1/2024	16494	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523369-E2		A454PD	E01	RECUR	B16729ZQNNMP0065P	12/1/2024	16729	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	E10867ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524805-E1		A456PD	E01	RECUR	Z16075ZQNNMP0583P	12/1/2024	16075	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	525344-E1		A371PD	E01	RECUR	Z00791ZQNNMP0605P	12/1/2024	791	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556032-E7		Z724PD	E01	RECUR	Z16992ZQNNMP0647P	12/1/2024	16992	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523927-E1		A372PD	E01	RECUR	Z17156ZQNNMP0559P	12/1/2024	17156	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E5		A406PD	R01	RECUR	F16102ZQNXMP0371P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E4		A443PD	R01	RECUR	D16102ZQNXMP0370P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556008-EN		Z174PD	E01	RECUR	Z17543ZQNNMP0625P	12/1/2024	17543	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523773-E1		A426PD	E01	RECUR	Z16490ZQNNMP0503P	12/1/2024	16490	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523470-E1		A419PD	E01	RECUR	Z16718ZQGNMP0168P	12/1/2024	16718	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	765492-E1		S204PD	E01	RECUR	Z15324ZQNNMP0801P	12/1/2024	15324	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556008-EL		Z793PD	E01	RECUR	Z17284ZQGNMP0623P	12/1/2024	17284	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523534-E1		PURANN	E05	RECUR	A04730RQPNMP0241P	12/1/2024	4730	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E2		PURANN	R05	RECUR	Z04350RQPXMP0697P	12/1/2024	4350	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523676-E1		A380PD	R01	RECUR	M01234ZQGXMP0419P	12/1/2024	M01234	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556008-EL		Z793PD	R01	RECUR	Z17284ZQGXMP0623P	12/1/2024	17284	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523727-E1		A417PD	R01	RECUR	M01123ZQGXMD0460D	12/1/2024	M01123	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556405-E2		Z700PD	E01	RECUR	B16795ZQNNMP0693P	12/1/2024	16795	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523825-E1		A374PD	E01	RECUR	Z16635ZNNNMP0529E	12/1/2024	16635	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	744108-E1		S208PD	E01	RECUR	Z15457ZQNNMD0792D	12/1/2024	15457	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556028-E3		Z683PD	E01	RECUR	B16784ZNNNMP0641E	12/1/2024	16798	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	745018-E1		S201PD	E01	RECUR	Z15769ZQNNMP0795P	12/1/2024	15769	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A00137ZQPXMP0781P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	E11472ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	88075-E1		V041PD	E01	RECUR	Z17109ZQGNMP0809P	12/1/2024	17109	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523439-E1		A463PD	E01	RECUR	M00540ZQGNMP0130P	12/1/2024	M00540	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	743448-E2		S196PD	E01	RECUR	Z16765ZQGNMD0789D	12/1/2024	16765	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E4		A441PD	E01	RECUR	Z17222ZQGNMD0060D	12/1/2024	17222	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	198046-E1		M026PD	E01	RECUR	A16689ZQNNMD0010D	12/1/2024	16689	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	744108-E1		S208PD	E01	RECUR	Z15457ZQNNMP0792P	12/1/2024	15457	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523781-E1		PURANN	R06	RECUR	M00308SQPXMP0505P	12/1/2024	M00308	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524953-E6		PURANN	R01	RECUR	D29201ZQPXMP0599P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556452-E3		Z791PD	E01	RECUR	B17163ZQNNMP0724P	12/1/2024	17163	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E7		PURANN	R05	RECUR	Z04350RQPXMP0702P	12/1/2024	4350	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556451-E1		Z755PD	E01	RECUR	Z17125ZQNNMP0720P	12/1/2024	17125	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523827-E1		A342PD	E01	RECUR	Z17184ZQGNMP0530P	12/1/2024	17184	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556342-E4		Z772PD	E01	RECUR	Z17092ZNNNMP0677E	12/1/2024	17092	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524743-E1		A450PD	E01	RECUR	Z17335ZQNNMD0582D	12/1/2024	17335	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523752-E1		A413PD	R01	RECUR	M02365ZQNXMP0486P	12/1/2024	2365	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523927-E2		A464PD	E01	RECUR	Z17157ZQNNCP0560P	12/1/2024	17157	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556042-E4		Z650PD	E01	RECUR	Z17081ZNNNMP0649E	12/1/2024	17081	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	Z07614ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523752-E1		A413PD	E01	RECUR	M02365ZQNNMP0486P	12/1/2024	2365	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E4		A441PD	E01	RECUR	Z17222ZQNNMD0060D	12/1/2024	17222	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556019-E7		Z751PD	E01	RECUR	Z17286ZNNNMP0638E	12/1/2024	17286	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524743-E1		A450PD	E01	RECUR	Z17335ZQNNMP0582P	12/1/2024	17335	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	150563-E1		PURANN	R05	RECUR	Z17063RQPXMP0006P	12/1/2024	17063	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-EA		A358PD	R01	RECUR	K16102ZQNXMP0376P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523732-E1		A347PD	E05	RECUR	M02215RQGNMP0464P	12/1/2024	M02215	C31	6C1				Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556016-E3		Z626PD	E01	RECUR	Z17114ZQNNMD0635D	12/1/2024	17114	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523884-E2		A404PD	E01	RECUR	Z03804ZQGNMP0546P	12/1/2024	3804	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523911-E1		A429PD	E01	RECUR	Z03201ZQGNMP0555P	12/1/2024	M03201	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	745018-E1		S201PD	E01	RECUR	Z15769ZQGNMP0795P	12/1/2024	15769	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	150028-E1		J074PD	E01	RECUR	Z01495ZQGNMP0005P	12/1/2024	1495	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E1		PURANN	E05	RECUR	Z00105RQPNMP0696P	12/1/2024	105	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E9		A459PD	R01	RECUR	J16102ZQNXMP0375P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556404-E1		Z725PD	E01	RECUR	M01220ZQNNMD0691D	12/1/2024	M01220	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556397-E1		Z729PD	E01	RECUR	Z00571ZQNNMP0685P	12/1/2024	M00571	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	E11472ZNPXMP0783E	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	Z10753ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E8		A370PD	R01	RECUR	I16102ZQNXMP0374P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523601-E1		A412PD	E01	RECUR	Z15525ZQNNMP0323P	12/1/2024	15525	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556008-EL		Z793PD	E01	RECUR	Z17364ZQNNMP0623P	12/1/2024	17284	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523727-E1		A417PD	R01	RECUR	M01123ZQGXMP0460P	12/1/2024	M01123	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	745018-E2		S209PD	E01	RECUR	Z17421ZQNNMP0796P	12/1/2024	17421	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	E10867ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523466-E3		A381PD	E01	RECUR	Z16903ZQNNMP0161P	12/1/2024	16903	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523773-E2		A345PD	E01	RECUR	Z16493ZQNNMP0504P	12/1/2024	16493	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556588-E2		Z757PD	E01	RECUR	Z17455ZNNNMP0744E	12/1/2024	17455	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523676-E1		A380PD	E01	RECUR	M01234ZQNNMD0419D	12/1/2024	M01234	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523621-E1		A382PD	E01	RECUR	Z16672ZQNNMD0345D	12/1/2024	16672	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	88075-E1		V041PD	R01	RECUR	Z17109ZQGXMP0809P	12/1/2024	17109	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523434-E1		A367PD	E01	RECUR	Z17424ZQGNMP0126P	12/1/2024	17424	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556801-E1		Z643PD	E01	RECUR	Z16916ZNNNMP0759E	12/1/2024	16916	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523466-E3		A381PD	E01	RECUR	Z16903ZQGNMP0161P	12/1/2024	16903	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E2		PURANN	E05	RECUR	Z04350RQPNMP0697P	12/1/2024	4350	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	780253-E2		S215PD	E01	RECUR	B17549ZQNNMP0804P	12/1/2024	17549	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523749-E1		A405PD	E01	RECUR	Z04174ZQGNMP0482P	12/1/2024	4174	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523676-E1		A380PD	E01	RECUR	M01234ZQNNMP0419P	12/1/2024	M01234	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523469-E1		A452PD	E01	RECUR	Z16728ZQNNMP0167P	12/1/2024	16728	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523621-E1		A382PD	E01	RECUR	Z16672ZQGNMP0345P	12/1/2024	16672	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523837-E1		A444PD	E01	RECUR	Z16967ZQNNMP0534P	12/1/2024	16967	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523883-E1		PURANN	E05	RECUR	Z16913RQPNMP0543P	12/1/2024	16913	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523395-E1		A470PD	R01	RECUR	M00156ZQGXMP0082P	12/1/2024	M00156	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556382-E1		Z631PD	E01	RECUR	Z16926ZQGNMP0679P	12/1/2024	16926	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556405-E2		Z700PD	E01	RECUR	B16795ZQNNMD0693D	12/1/2024	16795	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556397-E1		Z729PD	E01	RECUR	Z00571ZQGNMP0685P	12/1/2024	M00571	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523884-E2		A404PD	E01	RECUR	Z03804ZQNNMP0546P	12/1/2024	3804	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523485-E1		A458PD	E01	RECUR	M03290ZQGNMP0185P	12/1/2024	M03290	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556383-E1		Z662PD	E01	RECUR	Z17381ZQGNMP0680P	12/1/2024	17381	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	Z11429ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E3		Z810PD	E01	RECUR	Z17530ZNNNMP0699E	12/1/2024	17530	C38	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	743448-E1		S205PD	E01	RECUR	Z16764ZQNNMP0788P	12/1/2024	16764	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556452-E1		Z669PD	E01	RECUR	Z17173ZNNNMP0721E	12/1/2024	17173	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	150028-E1		J074PD	E01	RECUR	Z01495ZQNNMP0005P	12/1/2024	1495	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	745018-E1		S201PD	R01	RECUR	Z15769ZQGXMP0795P	12/1/2024	15769	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523490-E1		A373PD	E01	RECUR	Z01602ZQGNMP0192P	12/1/2024	1602	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523678-E2		A409PD	E01	RECUR	Z15541ZQNNMP0422P	12/1/2024	15541	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556397-E1		Z729PD	R01	RECUR	Z00571ZQGXMP0685P	12/1/2024	M00571	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523704-E1		A439PD	E01	RECUR	M00350ZQNNMP0445P	12/1/2024	M00350	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523791-E1		A423PD	E01	RECUR	Z04005ZQGNMP0514P	12/1/2024	4005	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	88075-E1		V041PD	E01	RECUR	Z17109ZQNNMP0809P	12/1/2024	17109	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	198046-E1		M026PD	E01	RECUR	A16689ZQNNMP0010P	12/1/2024	16689	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523819-E1		A442PD	E01	RECUR	Z15520ZQNNMP0528P	12/1/2024	15520	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556014-E7		Z743PD	E01	RECUR	Z17076ZNNNMP0629E	12/1/2024	17076	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523601-E1		A412PD	E01	RECUR	Z15525ZQGNMP0323P	12/1/2024	15525	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E4		A441PD	R01	RECUR	Z17222ZQNXMD0060D	12/1/2024	17222	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	E11472ZNPXMP0783E	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523601-E1		A412PD	R01	RECUR	Z15525ZQGXMP0323P	12/1/2024	15525	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523887-E2		A453PD	E01	RECUR	Z17090ZNNNMP0548E	12/1/2024	17096	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E4		A441PD	R01	RECUR	Z17222ZQGXMD0060D	12/1/2024	17222	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E5		PURANN	E05	RECUR	Z00105RQPNMP0701P	12/1/2024	105	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524953-E5		PURANN	R01	RECUR	C29201ZQPXMP0598P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556008-EL		Z793PD	R01	RECUR	Z17284ZQNXMP0623P	12/1/2024	17284	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556019-E9		Z766PD	E01	RECUR	Z17341ZNNNMP0640E	12/1/2024	17341	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556008-EL		Z793PD	E01	RECUR	Z17284ZQNNMP0623P	12/1/2024	17284	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556850-E1		Z762PD	R01	RECUR	Z16061ZQGXMP0779P	12/1/2024	16061	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523371-E1		A424PD	E01	RECUR	Z15247ZQGNMP0067P	12/1/2024	15247	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556723-E2		Z687PD	E01	RECUR	Z17407ZNNNMP0755E	12/1/2024	17407	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556245-ED		Z710PD	E01	RECUR	D17356ZNNNMP0668E	12/1/2024	17356	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	150028-E1		J074PD	E01	RECUR	Z01495ZQNNMD0005D	12/1/2024	1495	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E7		A462PD	R01	RECUR	H16102ZQNXMP0373P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523439-E1		A463PD	E01	RECUR	M00540ZQNNMD0130D	12/1/2024	M00540	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523825-E1		A374PD	E01	RECUR	Z16655ZNNNMP0529E	12/1/2024	16635	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523676-E1		A380PD	E01	RECUR	M01234ZQGNMP0419P	12/1/2024	M01234	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556588-E1		Z701PD	E01	RECUR	Z17453ZNNNMP0743E	12/1/2024	17453	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	E37063ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	743448-E1		S205PD	R01	RECUR	Z16764ZQGXMP0788P	12/1/2024	16764	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523637-E1		A398PD	E01	RECUR	Z15049ZQNNMP0364P	12/1/2024	15049	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523481-E1		A363PD	E01	RECUR	Z15851ZQNNMP0182P	12/1/2024	15851	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523749-E1		A405PD	R01	RECUR	Z04174ZQGXMP0482P	12/1/2024	4174	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523884-E1		A445PD	E01	RECUR	Z03676ZQGNMP0545P	12/1/2024	3676	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556016-E3		Z626PD	E01	RECUR	Z17114ZQNNMP0635P	12/1/2024	17114	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556801-E2		Z770PD	E01	RECUR	Z17126ZNNNMP0760E	12/1/2024	17126	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524710-E1		A451PD	E01	RECUR	Z17301ZQNNMP0574P	12/1/2024	17301	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523471-E1		A384PD	E01	RECUR	Z15562ZQGNMP0169P	12/1/2024	15562	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	780253-E1		S211PD	E01	RECUR	A17549ZQNNMP0803P	12/1/2024	17549	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A07615ZQPXMP0781P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523631-E1		A440PD	R01	RECUR	Z03682ZQNXMP0358P	12/1/2024	3682	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523444-E1		A349PD	E01	RECUR	Z15307ZQNNMP0131P	12/1/2024	15307	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	Z11429ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A00137ZQPXMP0781P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523678-E1		A434PD	E01	RECUR	Z15540ZQNNMP0421P	12/1/2024	15540	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523490-E1		A373PD	R01	RECUR	Z01602ZQGXMP0192P	12/1/2024	1602	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556016-E3		Z626PD	E01	RECUR	Z17114ZQGNMP0635P	12/1/2024	17114	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523434-E1		A367PD	E01	RECUR	Z17424ZQNNMP0126P	12/1/2024	17424	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556404-E1		Z725PD	E01	RECUR	M01220ZQNNMP0691P	12/1/2024	M01220	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523439-E1		A463PD	E01	RECUR	M00540ZQNNMP0130P	12/1/2024	M00540	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	385067-E5		H091PD	E01	RECUR	Z17526ZNNNMP0023E	12/1/2024	17526	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524710-E1		A451PD	E01	RECUR	Z17301ZQNNMD0574D	12/1/2024	17301	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556407-E1		Z678PD	E01	RECUR	Z17409ZQNNMD0694D	12/1/2024	17409	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523395-E1		A470PD	E01	RECUR	M00156ZQGNMP0082P	12/1/2024	M00156	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	933201-E1		H095PD	E01	RECUR	Z03508ZQNNMP0810P	12/1/2024	M03508	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E1		PURANN	E05	RECUR	Z00105RQPNMP0695P	12/1/2024	105	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523395-E1		A470PD	E01	RECUR	M00156ZQNNMP0082P	12/1/2024	M00156	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523752-E1		A413PD	R01	RECUR	M02365ZQGXMP0486P	12/1/2024	2365	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524710-E3		A397PD	E01	RECUR	Z17303ZQNNMP0578P	12/1/2024	17303	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523827-E1		A342PD	E01	RECUR	Z17184ZQNNMP0530P	12/1/2024	17184	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	140067-E1		V025PD	E01	RECUR	Z17562ZQNNMP0003P	12/1/2024	17562	C35	20	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523727-E1		A417PD	R01	RECUR	M01123ZQNXMD0460D	12/1/2024	M01123	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523641-E3		A414PD	R01	RECUR	C16102ZQNXMP0369P	12/1/2024	16102	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523676-E1		A380PD	E05	RECUR	M01234RQGNMP0419P	12/1/2024	M01234	C31	6C1				Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E5		A428PD	E01	RECUR	Z17147ZNNNMP0061E	12/1/2024	17155	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523382-E1		A393PD	E01	RECUR	A15236ZQNNMP0073P	12/1/2024	15236	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524805-E2		A411PD	E01	RECUR	Z16687ZQNNMP0584P	12/1/2024	16687	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556390-E1		Z801PD	E01	RECUR	Z15192ZQNNMP0682P	12/1/2024	15192	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	85195-E1		V042PD	E01	RECUR	Z16219ZQNNMP0808P	12/1/2024	16219	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	524704-E3		A387PD	E01	RECUR	Z17315ZQNNMP0572P	12/1/2024	17315	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523466-E1		A469PD	E01	RECUR	Z04762ZNGNMP0160E	12/1/2024	4762	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523361-E1		A385PD	E01	RECUR	Z17529ZQGNMP0050P	12/1/2024	17529	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556060-E9		Z697PD	E01	RECUR	Z17333ZNNNMP0650E	11/30/2024	17333	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	525344-E1		A371PD	E01	RECUR	Z00791ZQGNMP0605P	12/1/2024	791	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	743448-E2		S196PD	E01	RECUR	Z16765ZQGNMP0789P	12/1/2024	16765	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523719-E1		A344PD	E01	RECUR	Z04001ZQGNMP0452P	12/1/2024	4001	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	762400-E1		S217PD	E01	RECUR	Z17550ZQNNMP0800P	12/1/2024	17550	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	E01	RECUR	E37063ZQPNMP0783P	12/1/2024				DS001	DS001		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523678-E1		A434PD	E01	RECUR	Z15540ZQNNMD0421D	12/1/2024	15540	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	745018-E1		S201PD	E01	RECUR	Z15769ZQNNMD0795D	12/1/2024	15769	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523752-E1		A413PD	E01	RECUR	M02365ZQGNMP0486P	12/1/2024	2365	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	765492-E1		S204PD	E01	RECUR	Z15324ZQNNMD0801D	12/1/2024	15324	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523426-E1		A356PD	E01	RECUR	M02174ZQGNMP0118P	12/1/2024	M02174	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556703-E1		Z782PD	E01	RECUR	A17368ZQNNMD0752D	12/1/2024	17368	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556028-E3		Z683PD	E01	RECUR	Z16798ZNNNMP0641E	12/1/2024	16798	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523668-E1		PURANN	R05	RECUR	M00277RQPXMP0408P	12/1/2024	M00277	F11	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523631-E1		A440PD	R01	RECUR	Z03682ZQGXMP0358P	12/1/2024	3682	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523727-E1		A417PD	R01	RECUR	M01123ZQNXMP0460P	12/1/2024	M01123	C31	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556014-E8		Z633PD	E01	RECUR	Z17238ZNNNMP0630E	11/30/2024	17238	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556405-E1		Z780PD	E01	RECUR	A16795ZQNNMP0692P	12/1/2024	16795	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523753-E1		A437PD	R01	RECUR	Z16374ZQGXMP0487P	12/1/2024	16374	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E5		PURANN	R05	RECUR	Z00105RQPXMP0700P	12/1/2024	105	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	R01	RECUR	E11472ZQPXMP0783P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A07615ZQPXMP0782P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523887-E2		A453PD	E01	RECUR	Z17096ZNNNMP0548E	12/1/2024	17096	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523395-E1		A470PD	E01	RECUR	M00156ZQNNMD0082D	12/1/2024	M00156	C31	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523876-E1		A392PD	E01	RECUR	Z17097ZQNNMP0542P	12/1/2024	17097	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A85313ZQPXMP0781P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523369-E1		A427PD	E01	RECUR	A16729ZQGNMP0064P	12/1/2024	16729	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523837-E1		A444PD	E01	RECUR	Z16967ZQNNMD0534D	12/1/2024	16967	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556411-E1		PURANN	R05	RECUR	Z00105RQPXMP0695P	12/1/2024	105	F21	6C1				Telus Code to ERF Trans Type Dode translation not found in the ERF Cat Code and Cat Item Code for PARIS TTC with mapping to Empower Codes file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E2		PURANN	R01	RECUR	A07671ZQPXMP0781P	12/1/2024				DSXXA	DSXXA		Easy Group Account ID to ERF CNTRCT_NUM translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556802-E4		Z679PD	E01	RECUR	Z17571ZNNNMP0772E	12/1/2024	17571	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556452-E3		Z791PD	E01	RECUR	B17163ZQNNMD0724D	12/1/2024	17163	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	557349-E3		PURANN	E01	RECUR	E37063ZQPNMP0783P	12/1/2024				DS001	DS001		SDIO ID to ERF Fund ID translation not found in the erf_contracts w Fund ID with GG Lookup file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556382-E1		Z631PD	E01	RECUR	Z16926ZQNNMD0679D	12/1/2024	16926	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556249-E1		Z630PD	E01	RECUR	Z16902ZQNNMP0669P	11/30/2024	16902	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523366-E4		A441PD	E01	RECUR	Z17222ZQNNMP0060P	12/1/2024	17222	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523753-E1		A437PD	E01	RECUR	Z16374ZQNNMP0487P	12/1/2024	16374	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556452-E1		Z669PD	E06	RECUR	Z17173SNNNMP0721E	12/1/2024	17173	C35	6C1				Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	88075-E1		V041PD	R01	RECUR	Z17109ZQNXMP0809P	12/1/2024	17109	C35	6C1	DSXXA	DSXXA		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	523444-E1		A349PD	E01	RECUR	Z15307ZQGNMP0131P	12/1/2024	15307	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
+P_DB_PAYMENT_PAYMENTS_M11_11082024_125245.csv	DB_PAYMENT_DEPOSIT_M11_11082024_125245.csv	TELUS	ERF_DB_TRANS_20250121_122808.TXT	ERF	556008-EM		Z744PD	E01	RECUR	Z17284ZQNNMP0624P	12/1/2024	17364	C35	6C1	DS001	DS001		Invalid SDIO and Transaction Code combination found in the source file
