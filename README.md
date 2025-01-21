@@ -1,16 +1,78 @@
-erf9_detail_rec = {
-    "SOURCE_FILE_NAME": {"testcasenumber": 1, "pos": "1-50", "len": 50, "default": "N/A", "default_val": "NA", "testcase": "Default value check", "req": "yes"},
-    "SOURCE_SYSTEM": {"testcasenumber": 2, "pos": "51-60", "len": 10, "default": "yes", "default_val": "NA", "testcase": "Default value check", "req": "yes"},
-    "OUTBOUND_FILE_NAME": {"testcasenumber": 3, "pos": "61-100", "len": 40, "default": "yes", "default_val": "NA", "testcase": "Default value check", "req": "yes"},
-    "TARGET_SYSTEM": {"testcasenumber": 4, "pos": "101-110", "len": 10, "default": "yes", "default_val": "NA", "testcase": "Default value check", "req": "yes"},
-    "SOURCE_ACCT_CNTRCT_NUM": {"testcasenumber": 5, "pos": "111-120", "len": 10, "default": "no", "default_val": "NA", "testcase": "Null check", "req": "yes"},
-    "SOURCE_FUND_ID": {"testcasenumber": 6, "pos": "121-130", "len": 10, "default": "no", "default_val": "NA", "testcase": "Null check", "req": "no"},
-    "SOURCE_SDIO": {"testcasenumber": 7, "pos": "131-136", "len": 6, "default": "no", "default_val": "NA", "testcase": "Null check", "req": "yes"},
-    "SOURCE_TTC": {"testcasenumber": 8, "pos": "137-139", "len": 3, "default": "no", "default_val": "NA", "testcase": "Null check", "req": "yes"},
-    "SOURCE_TRANSACTION_CATEGORY": {"testcasenumber": 9, "pos": "140-150", "len": 10, "default": "no", "default_val": "NA", "testcase": "Null check", "req": "yes"},
-    "SOURCE_TRANSACTION_CODE": {"testcasenumber": 10, "pos": "151-160", "len": 10, "default": "no", "default_val": "NA", "testcase": "Null check", "req": "yes"},
-    "ERF_CNTRCT_NUM": {"testcasenumber": 11, "pos": "161-170", "len": 10, "default": "no", "default_val": "NA", "testcase": "Null check", "req": "yes"},
-    "ERF_CNTRCT_TYP_CD": {"testcasenumber": 12, "pos": "171-180", "len": 10, "default": "no", "default_val": "NA", "testcase": "Null check", "req": "yes"},
-    "ERROR_CODE": {"testcasenumber": 13, "pos": "181-190", "len": 10, "default": "yes", "default_val": "NA", "testcase": "Default value check", "req": "no"},
-    "ERROR_DESCRIPTION": {"testcasenumber": 14, "pos": "191-300", "len": 110, "default": "yes", "default_val": "NA", "testcase": "Default value check", "req": "no"}
-}
+ if (c == 'ERROR_DESCRIPTION'):
+        
+        test_case_number='31'
+        
+        # SOURCE_ACCT_CNTRCT_NUM|SOURCE_SDIO|SOURCE_TTC|SOURCE_TRANSACTION_CATEGORY|SOURCE_TRANSACTION_CODE|ERF_CNTRCT_NUM|ERF_CNTRCT_TYP_CD|ERF_FUND_ID|ERF_TRANS_TYPE_CODE|ERROR_DESCRIPTION
+        
+        print("Data Count Validation between source and Target")
+        spark.sql('''select distinct trim(s.SOURCE_ACCT_CNTRCT_NUM), trim(s.SOURCE_SDIO), trim(s.SOURCE_TTC), trim(s.SOURCE_TRANSACTION_CATEGORY), trim(s.SOURCE_TRANSACTION_CODE),
+                    trim(s.ERF_CNTRCT_NUM), trim(s.ERF_CNTRCT_TYP_CD), trim(s.ERF_FUND_ID), trim(s.ERF_TRANS_TYPE_CODE), trim(s.ERROR_DESCRIPTION) from srcdata s
+                    except
+                    select distinct trim(t.SOURCE_ACCT_CNTRCT_NUM), trim(t.SOURCE_SDIO), trim(t.SOURCE_TTC), trim(t.SOURCE_TRANSACTION_CATEGORY), trim(t.SOURCE_TRANSACTION_CODE),
+                    trim(t.ERF_CNTRCT_NUM), trim(t.ERF_CNTRCT_TYP_CD), trim(t.ERF_FUND_ID), trim(t.ERF_TRANS_TYPE_CODE), trim(t.ERROR_DESCRIPTION) from tgtdata t  ''').show(truncate=0)
+        
+        test_case_count=str(spark.sql('''select count(*) from (select distinct trim(s.SOURCE_ACCT_CNTRCT_NUM), trim(s.SOURCE_SDIO), trim(s.SOURCE_TTC), trim(s.SOURCE_TRANSACTION_CATEGORY), trim(s.SOURCE_TRANSACTION_CODE),
+                    trim(s.ERF_CNTRCT_NUM), trim(s.ERF_CNTRCT_TYP_CD), trim(s.ERF_FUND_ID), trim(s.ERF_TRANS_TYPE_CODE), trim(s.ERROR_DESCRIPTION) from srcdata s
+                    except
+                    select distinct trim(t.SOURCE_ACCT_CNTRCT_NUM), trim(t.SOURCE_SDIO), trim(t.SOURCE_TTC), trim(t.SOURCE_TRANSACTION_CATEGORY), trim(t.SOURCE_TRANSACTION_CODE),
+                    trim(t.ERF_CNTRCT_NUM), trim(t.ERF_CNTRCT_TYP_CD), trim(t.ERF_FUND_ID), trim(t.ERF_TRANS_TYPE_CODE), trim(t.ERROR_DESCRIPTION) from tgtdata t ) ''').collect()[0][0])
+        
+        passed_recs=int(totalrecs)-int(test_case_count)
+        
+        print ('Test case number====' + str(test_case_number) + 'Failure record count====' + str(test_case_count))
+        
+        if (int(test_case_count)>0):
+            teststatus = "Fail"
+        else:
+            teststatus = "Pass"
+        
+        if (int(test_case_count)>0):
+            
+            #print("source to target missing payeeid")
+            
+            spark.sql('''select distinct trim(s.SOURCE_ACCT_CNTRCT_NUM), trim(s.SOURCE_SDIO), trim(s.SOURCE_TTC), trim(s.SOURCE_TRANSACTION_CATEGORY), trim(s.SOURCE_TRANSACTION_CODE),
+                    trim(s.ERF_CNTRCT_NUM), trim(s.ERF_CNTRCT_TYP_CD), trim(s.ERF_FUND_ID), trim(s.ERF_TRANS_TYPE_CODE), trim(s.ERROR_DESCRIPTION) from srcdata s
+                    except
+                    select distinct trim(t.SOURCE_ACCT_CNTRCT_NUM), trim(t.SOURCE_SDIO), trim(t.SOURCE_TTC), trim(t.SOURCE_TRANSACTION_CATEGORY), trim(t.SOURCE_TRANSACTION_CODE),
+                    trim(t.ERF_CNTRCT_NUM), trim(t.ERF_CNTRCT_TYP_CD), trim(t.ERF_FUND_ID), trim(t.ERF_TRANS_TYPE_CODE), trim(t.ERROR_DESCRIPTION) from tgtdata t ''').show(truncate=0)
+                    
+            error_data.extend(spark.sql("select concat("+test_case_number+", '|',SOURCE_ACCT_CNTRCT_NUM, '|', SOURCE_SDIO, '|', SOURCE_TTC, '|', SOURCE_TRANSACTION_CODE,'|', ERROR_DESCRIPTION, '|', "+c+", '|', '"+c+"'                         ) as Res from tgtdata group by "+ c +" , SOURCE_ACCT_CNTRCT_NUM, SOURCE_SDIO, SOURCE_TTC,SOURCE_TRANSACTION_CODE, ERROR_DESCRIPTION having count(1) > 1 ".format(c)+ "limit 100").rdd.flatMap(lambda x:x).collect())
+                
+        txt = return_testcase_res(test_case_number,totalrecs,c,'85-100','NA',str(passed_recs),str(test_case_count),teststatus,'Data Count Validation between source and Target')
+        
+        fwf_data.append(txt)
+        
+
+# saving the test report ".txt" file to s3
+try:
+    
+    print("saving......")        
+    
+    s3Client=boto3.client('s3')
+
+
+    if rectype == 'd':
+        print("save details records")
+        
+        s3Client.put_object(Body='\n'.join(fwf_data), Bucket=tgt_bucket, Key=tgt_key+f'ERF9_Detail_Record_TestResult_{date_file}.TXT')
+        
+        print("save details records end")
+        
+        if len(error_data) > 0:
+            
+            print("details records errors start here")
+            print(error_data)
+            s3Client.put_object(Body='\n'.join(error_data), Bucket=tgt_bucket, Key=tgt_key+f'ERF9_Detail_Record_TestResult_Failures_{date_file}.TXT')
+        
+            print("details records errors end here")
+            
+    if rectype == 't':
+        print(type(fwf_data))
+        print(fwf_data)
+        s3Client.put_object(Body='\n'.join(fwf_data), Bucket=tgt_bucket, Key=tgt_key+f'ERF9_Trailer_Record_RestResult_{date_file}.TXT')
+        
+        if len(error_data) > 0:
+            s3Client.put_object(Body='\n'.join(error_data), Bucket=tgt_bucket, Key=tgt_key+f'ERF9_Trailer_Record_TestResult_Failure_Recs_{date_file}.txt')
+        
+
+        
