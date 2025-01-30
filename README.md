@@ -77,3 +77,865 @@ CaTS Mapping Spreadsheets,1) erf_contracts w Fund ID with GG Lookup.xlsx,,,,,,,,
 ,2) TTC Phoenix Codes Mapping_.xlsx,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Will you be able to isolate invalid records or will you need a new full file?,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Who will Receive the a list of the Invalid Records,Production Support Team ongoing discussion with CaTS,,,,,,,,,,,,,,,,,,,,,,,,,,,
+
+
+
+
+
+
+
+
+
+
+
+CALENDAR_DATE,TYPE_DATE,TYPE_DESCRIPTION                                       
+1-Jan-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+2-Jan-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Jan-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Jan-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Jan-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+7-Jan-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+8-Jan-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Jan-24,CBOQ      ,3RD FRIDAY OF MONTH FOLLOWING QUARTER END.                  
+          ,CBUQ      ,QUARTERLY COMMISSION CALENDAR - 3rd BUSINESS DAYS AFTER QE  
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Jan-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+14-Jan-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+15-Jan-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+16-Jan-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Jan-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Jan-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+21-Jan-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+22-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Jan-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+28-Jan-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+29-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Jan-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Jan-24,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Feb-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Feb-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Feb-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+4-Feb-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+5-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Feb-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Feb-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+11-Feb-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+12-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Feb-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Feb-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+18-Feb-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+19-Feb-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+20-Feb-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Feb-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Feb-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+25-Feb-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+26-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Feb-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Feb-24,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Mar-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+3-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+4-Mar-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Mar-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+10-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+11-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Mar-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+17-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+18-Mar-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Mar-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+24-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+25-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Mar-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Mar-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,HOQE      ,HOME OFFICE QUARTER END - LAST BUS. DAY OF QTR              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Mar-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+30-Mar-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+31-Mar-24,CAQE      ,CALENDAR QUARTER END (LAST DAY OF MONTH) - NOT ON AUTOSYS   
+          ,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+1-Apr-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Apr-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Apr-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Apr-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+7-Apr-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+8-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Apr-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,CBOQ      ,3RD FRIDAY OF MONTH FOLLOWING QUARTER END.                  
+          ,CBUQ      ,QUARTERLY COMMISSION CALENDAR - 3rd BUSINESS DAYS AFTER QE  
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Apr-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+14-Apr-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+15-Apr-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Apr-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Apr-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+21-Apr-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+22-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Apr-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Apr-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+28-Apr-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+29-Apr-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Apr-24,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-May-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-May-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-May-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+5-May-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+6-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-May-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-May-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-May-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+12-May-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+13-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-May-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+19-May-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+20-May-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-May-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-May-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-May-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+26-May-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+27-May-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+28-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-May-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-May-24,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+2-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+3-Jun-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Jun-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Jun-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+9-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+10-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+16-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+17-Jun-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Jun-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+20-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Jun-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+23-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+24-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Jun-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Jun-24,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,HOQE      ,HOME OFFICE QUARTER END - LAST BUS. DAY OF QTR              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Jun-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+30-Jun-24,CAQE      ,CALENDAR QUARTER END (LAST DAY OF MONTH) - NOT ON AUTOSYS   
+          ,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+1-Jul-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Jul-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Jul-24,CBUQ      ,QUARTERLY COMMISSION CALENDAR - 3rd BUSINESS DAYS AFTER QE  
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Jul-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+5-Jul-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Jul-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+7-Jul-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+8-Jul-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Jul-24,CBOQ      ,3RD FRIDAY OF MONTH FOLLOWING QUARTER END.                  
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Jul-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+14-Jul-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+15-Jul-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Jul-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Jul-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Jul-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+21-Jul-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+22-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Jul-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+28-Jul-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+29-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Jul-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Jul-24,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Aug-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Aug-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+4-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+5-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Aug-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+11-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+12-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Aug-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+18-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+19-Aug-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Aug-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+25-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+26-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Aug-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Aug-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Aug-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+1-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+2-Sep-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+3-Sep-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Sep-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+8-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+9-Sep-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Sep-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+15-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+16-Sep-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Sep-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+22-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+23-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Sep-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Sep-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+29-Sep-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+30-Sep-24,CAQE      ,CALENDAR QUARTER END (LAST DAY OF MONTH) - NOT ON AUTOSYS   
+          ,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,HOQE      ,HOME OFFICE QUARTER END - LAST BUS. DAY OF QTR              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Oct-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Oct-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Oct-24,CBUQ      ,QUARTERLY COMMISSION CALENDAR - 3rd BUSINESS DAYS AFTER QE  
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Oct-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+6-Oct-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+7-Oct-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Oct-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Oct-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+13-Oct-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+14-Oct-24,CBOQ      ,3RD FRIDAY OF MONTH FOLLOWING QUARTER END.                  
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Oct-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+20-Oct-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+21-Oct-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Oct-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Oct-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Oct-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+27-Oct-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+28-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Oct-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Oct-24,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Nov-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+3-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+4-Nov-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Nov-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Nov-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+10-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+11-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+17-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+18-Nov-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Nov-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Nov-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+24-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+25-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Nov-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Nov-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+29-Nov-24,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Nov-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+1-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+2-Dec-24,CHBK      ,COMMISSIONS CHARGEBACK -TERMINATING PER MARS                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Dec-24,ABOM      ,MONTH END DATE FOR PROCESSING ASSET COMP                    
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Dec-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+8-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+9-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+15-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+16-Dec-24,CBOM      ,COMMISSION CUTOFF BEFORE BOME (DATES PROVIDED BY LLIJ)      
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Dec-24,BOME      ,BRANCH OFFICE MONTH END - DATES PROVIDED BY CORP COMM ADMIN 
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Dec-24,BWKF      ,BI-WEEKLY FRIDAY PCGR PROCESSING                            
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+22-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+23-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Dec-24,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+26-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+29-Dec-24,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+30-Dec-24,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Dec-24,CAQE      ,CALENDAR QUARTER END (LAST DAY OF MONTH) - NOT ON AUTOSYS   
+          ,HOME      ,HOME OFFICE MONTH END - LAST BUS. DAY OF MONTH              
+          ,HOQE      ,HOME OFFICE QUARTER END - LAST BUS. DAY OF QTR              
+          ,HOYE      ,HOME OFFICE YEAR END - LAST BUS. DAY OF YEAR                
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Jan-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+2-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Jan-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+5-Jan-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+6-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Jan-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+12-Jan-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+13-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Jan-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+19-Jan-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+20-Jan-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+21-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Jan-25,FINH      ,GWL HOME OFFICE WORK DAY                                    
+25-Jan-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+26-Jan-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+27-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Jan-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Feb-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+2-Feb-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+3-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Feb-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+9-Feb-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+10-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Feb-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+16-Feb-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+17-Feb-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+18-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Feb-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+23-Feb-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+24-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Feb-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+2-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+3-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+9-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+10-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+16-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+17-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+23-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+24-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Mar-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+30-Mar-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+31-Mar-25,CAQE      ,CALENDAR QUARTER END (LAST DAY OF MONTH) - NOT ON AUTOSYS   
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Apr-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+6-Apr-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+7-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Apr-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+13-Apr-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+14-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Apr-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+19-Apr-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+20-Apr-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+21-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Apr-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+27-Apr-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+28-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Apr-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+4-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+5-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+11-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+12-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+18-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+19-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+25-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+26-May-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+27-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-May-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-May-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+1-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+2-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+8-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+9-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+15-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+16-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Jun-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+20-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+22-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+23-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Jun-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+29-Jun-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+30-Jun-25,CAQE      ,CALENDAR QUARTER END (LAST DAY OF MONTH) - NOT ON AUTOSYS   
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Jul-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+5-Jul-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+6-Jul-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+7-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Jul-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+13-Jul-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+14-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Jul-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+20-Jul-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+21-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Jul-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+27-Jul-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+28-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Jul-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+3-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+4-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+10-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+11-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+17-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+18-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+24-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+25-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Aug-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+31-Aug-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+1-Sep-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+2-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Sep-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+7-Sep-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+8-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Sep-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+14-Sep-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+15-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Sep-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+21-Sep-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+22-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Sep-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+28-Sep-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+29-Sep-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Sep-25,CAQE      ,CALENDAR QUARTER END (LAST DAY OF MONTH) - NOT ON AUTOSYS   
+          ,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Oct-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+5-Oct-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+6-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Oct-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+12-Oct-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+13-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Oct-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+19-Oct-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+20-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Oct-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+26-Oct-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+27-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+28-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Oct-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+1-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+2-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+3-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+7-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+8-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+9-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+10-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+14-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+15-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+16-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+17-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+21-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+22-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+23-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+24-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+26-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Nov-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+28-Nov-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+29-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+30-Nov-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+1-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+2-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+3-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+4-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+5-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+6-Dec-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+7-Dec-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+8-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+9-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+10-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+11-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+12-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+13-Dec-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+14-Dec-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+15-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+16-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+17-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+18-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+19-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+20-Dec-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+21-Dec-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+22-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+23-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+24-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+25-Dec-25,FINH      ,FINANCIAL HOLIDAY - STOCK MARKET CLOSED DAY                 
+26-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+27-Dec-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+28-Dec-25,WEND      ,WEEKEND DAY - NOT ON AUTOSYS                                
+29-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+30-Dec-25,WORK      ,GWL HOME OFFICE WORK DAY                                    
+31-Dec-25,CAQE      ,CALENDAR QUARTER END (LAST DAY OF MONTH) - NOT ON AUTOSYS   
+
