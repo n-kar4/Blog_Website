@@ -1,45 +1,224 @@
-source_df = spark.read.csv('./easy_calender.csv',header=True)
-# target_df = spark.read.csv('./tgt.csv', header=True, inferSchema=True)
+payment 
+PayeeID	PaymentID	TransactionCategory	TransactionType	TransactionCode	AccountFunding	TransactionAmount_Previous	TransactionAmount
+02000000019Z16992X01	be5c290c-7d99-4fad-89a0-919df7263294	RECUR	A	Z16992ZQNNMP0647P	556032-E7.Z724PD.E01		144.2
+10000000001B17163P01	cdc4e5c9-d106-4408-8482-62d0a92fb262	RECUR	A	B17163ZQNNMP0724P	556452-E3.Z791PD.E01		94.74
+10000000001D17349P01	e62beb0e-72a4-48a4-835e-99c52bfc5ef5	RECUR	A	D17349ZQNNMP0667P	556245-E5.Z346PD.E01		134.65
+10000000001Z00940P01	22c23e72-062a-412a-8828-5c25029893a7	RECUR	A	Z00940ZQPNMP0861P	523662-E1.PURANN.E01		724.37
+10000000001Z02889P01	c2825ce5-e195-4945-8b6f-29ac7fad3504	RECUR	A	Z02889ZQPNMP0381P	523645-E1.PURANN.E01		47.23
+10000000001Z15221P01	34833e6d-3419-46c3-9df8-02579b68dcc6	RECUR	A	Z15221ZQNNMP0108P	523417-E1.A238PD.E01		103.6
+10000000001Z15324B01	640d94eb-3502-44ef-8d57-60fedc5fafa2	RECUR	A	Z15324ZQNNMP0801P	765492-E1.S204PD.E01		301.64
+10000000001Z16493P01	6ef8de00-3837-434e-bf5f-a77ede0bddbf	RECUR	A	Z16493ZQNNMP0504F			86.42
+10000000001Z16493P01	6ef8de00-3837-434e-bf5f-a77ede0bddbf	RECUR	A	Z16493ZQNNMP0504P	523773-E2.A345PD.E01		3646.48
+10000000001Z16599P01	456c5e27-baf5-45a0-b344-6c80d74b01bf	RECUR	A	Z16599ZQNNMP0683P	556390-E2.Z718PD.E01		232.85
+10000000001Z16764P01	957d9854-e715-4474-8e0b-59a0799f3477	RECUR	A	Z16764ZQGNMP0788P	743448-E1.S205PD.E01		809.37
+10000000001Z16902B01	0cecba61-e093-4b8b-8ca0-f1a1b3690600	RECUR	A	Z16902ZQNNMP0669P	556249-E1.Z630PD.E01		5578.96
+10000000001Z16926P01	98d5869f-c143-4c23-92e6-45797f50daf8	RECUR	A	Z16926ZQNNMP0679F			76.49
+10000000001Z16926P01	98d5869f-c143-4c23-92e6-45797f50daf8	RECUR	A	Z16926ZQNNMP0679P	556382-E1.Z631PD.E01		1904.9
+10000000001Z17088P01	dfddd467-3bdb-4c3a-83a0-e0cc558e624f	RECUR	A	Z17088ZQNNMP0716P	556441-E1.Z698PD.E01		649.93
+10000000001Z17090P01	85e98280-04cf-46f2-902c-bf03d5119dc4	RECUR	A	Z17090ZQNNMP0547P	523887-E1.A399PD.E01		815
+10000000001Z17097P01	8654daf5-b037-4ad8-b037-8ad32efd7e3b	RECUR	A	Z17097ZQNNMP0542P	523876-E1.A392PD.E01		1317.58
+10000000001Z17109P01	d6f16701-ae31-4be4-ae93-72bea6289c8e	RECUR	A	Z17109ZQGNMP0809P	88075-E1.V041PD.E01		1896.3
+10000000001Z17109P01	d6f16701-ae31-4be4-ae93-72bea6289c8e	RECUR	A	Z17109ZQNNMP0809P	88075-E1.V041PD.E01		551.79
+10000000001Z17237B01	88fb70ac-eb31-43e5-8efc-498e0279a247	RECUR	A	Z17237SQNNMP0631P	556014-E9.Z399PD.E01		406.29
+10000000001Z17277P01	ef31cea9-9f63-42cd-913c-25daf305dd37	RECUR	A	Z17277ZQNNMP0637P	556019-E6.Z514PD.E01		336.23
+10000000001Z17290P01	de0f509a-e7bd-4836-98bf-4a0d4d2bd77e	RECUR	A	Z17290ZQNNMP0726P	556509-E1.Z346PD.E01		2854.18
+10000000001Z17303P01	4d73acd8-0325-4034-8eac-e769100fa9e0	RECUR	A	Z17303ZQNNMP0578P	524710-E3.A397PD.E01		2195.37
+10000000001Z17333B01	cae10ab1-65be-4cde-bff0-510752fcd634	RECUR	A	Z17333ZNNNMP0650E	556060-E9.Z697PD.E01		901.55
+10000000001Z17343P01	3ec323a8-cb92-4030-93be-a753691b5887	RECUR	A	Z17343ZQNNMP0727P	556515-E1.Z250PD.E01		360.1
+10000000001Z17353B01	25ff1a74-d56f-4858-aad7-75f10bb95ec9	RECUR	A	Z17353ZQNNMP0729P	556523-E1.Z328PD.E01		192.17
+10000000001Z17381P01	395d857f-6b7c-4b3b-9179-2d0d2343f4d4	RECUR	A	Z17381ZQGNMP0680P	556383-E1.Z662PD.E01		455.55
+10000000001Z17409P01	7d698ea3-b8f2-4357-8faa-df40fc10eb38	RECUR	A	Z17409ZQNNMP0694P	556407-E1.Z678PD.E01		414.54
+10000000001Z17437P01	f1eb484a-012f-47d0-a650-2cb95307c04a	RECUR	A	Z17437ZQNNMP0718P	556443-E2.Z514PD.E01		210.51
+10000000001Z17469P01	33fa6c31-0cb4-42b7-b09e-b678004f812c	RECUR	A	Z17469ZQNNMP0741P	556565-E1.Z514PD.E01		1124.14
+10000000001Z17520P01	cf09590c-8f2c-4686-87d7-40c4b1501ac0	RECUR	A	Z17520ZQNNMP0674P	556271-E3.Z399PD.E01		97.94
+10000000002A17130P02	8d8e226e-0b25-4127-81ac-e6a17818646d	RECUR	A	A17130ZQNNMP0689P	556403-E1.Z514PD.E01		891
+10000000002D17349P01	d5119196-6a77-4720-a4f6-8858db53257f	RECUR	A	D17349ZQNNMP0667P	556245-E5.Z346PD.E01		1576.35
+10000000002Z03682P01	089fdffe-d01a-4d7d-a6d4-fe335865c3e9	RECUR	A	Z03682ZQNXMP0358F			72.89
+10000000002Z03682P01	089fdffe-d01a-4d7d-a6d4-fe335865c3e9	RECUR	A	Z03682ZQNXMP0358P	523631-E1.A440PD.E01		959.41
+10000000002Z15324P01	1a071b10-747f-4c26-9513-bb0fd52e012b	RECUR	A	Z15324ZQNNMP0801P	765492-E1.S204PD.E01		1351.88
+10000000002Z15520P01	de75df65-a13e-4711-8be8-508eaf6244f2	RECUR	A	Z15520ZQNNMP0528P	523819-E1.A442PD.E01		1760.95
+
+p_processed
+PayeeID	PaymentID	TransactionCategory	TransactionType	TransactionCode	AccountFunding	TransactionAmount_Previous	TransactionAmount
+02000000019Z16992X01	be5c290c-7d99-4fad-89a0-919df7263294	RECUR	A	Z16992ZQNNMP0647P	556032-E7.Z724PD.E01		144.2
+10000000001B17163P01	cdc4e5c9-d106-4408-8482-62d0a92fb262	RECUR	A	B17163ZQNNMP0724P	556452-E3.Z791PD.E01		94.74
+10000000001D17349P01	e62beb0e-72a4-48a4-835e-99c52bfc5ef5	RECUR	A	D17349ZQNNMP0667P	556245-E5.Z346PD.E01		134.65
+10000000001Z00940P01	22c23e72-062a-412a-8828-5c25029893a7	RECUR	A	Z00940ZQPNMP0861P	523662-E1.PURANN.E01		724.37
+10000000001Z02889P01	c2825ce5-e195-4945-8b6f-29ac7fad3504	RECUR	A	Z02889ZQPNMP0381P	523645-E1.PURANN.E01		47.23
+10000000001Z15221P01	34833e6d-3419-46c3-9df8-02579b68dcc6	RECUR	A	Z15221ZQNNMP0108P	523417-E1.A238PD.E01		103.6
+10000000001Z15324B01	640d94eb-3502-44ef-8d57-60fedc5fafa2	RECUR	A	Z15324ZQNNMP0801P	765492-E1.S204PD.E01		301.64
+10000000001Z16493P01	6ef8de00-3837-434e-bf5f-a77ede0bddbf	RECUR	A	Z16493ZQNNMP0504P	523773-E2.A345PD.E01		3646.48
+10000000001Z16493P01	6ef8de00-3837-434e-bf5f-a77ede0bddbf	RECUR	A	Z16493ZQNNMP0504F	523773-E2.A345PD.E03		86.42
+10000000001Z16599P01	456c5e27-baf5-45a0-b344-6c80d74b01bf	RECUR	A	Z16599ZQNNMP0683P	556390-E2.Z718PD.E01		232.85
+10000000001Z16764P01	957d9854-e715-4474-8e0b-59a0799f3477	RECUR	A	Z16764ZQGNMP0788P	743448-E1.S205PD.E01		809.37
+10000000001Z16902B01	0cecba61-e093-4b8b-8ca0-f1a1b3690600	RECUR	A	Z16902ZQNNMP0669P	556249-E1.Z630PD.E01		5578.96
+10000000001Z16926P01	98d5869f-c143-4c23-92e6-45797f50daf8	RECUR	A	Z16926ZQNNMP0679P	556382-E1.Z631PD.E01		1904.9
+10000000001Z16926P01	98d5869f-c143-4c23-92e6-45797f50daf8	RECUR	A	Z16926ZQNNMP0679F	556382-E1.Z631PD.E03		76.49
+10000000001Z17088P01	dfddd467-3bdb-4c3a-83a0-e0cc558e624f	RECUR	A	Z17088ZQNNMP0716P	556441-E1.Z698PD.E01		649.93
+10000000001Z17090P01	85e98280-04cf-46f2-902c-bf03d5119dc4	RECUR	A	Z17090ZQNNMP0547P	523887-E1.A399PD.E01		815
+10000000001Z17097P01	8654daf5-b037-4ad8-b037-8ad32efd7e3b	RECUR	A	Z17097ZQNNMP0542P	523876-E1.A392PD.E01		1317.58
+10000000001Z17109P01	d6f16701-ae31-4be4-ae93-72bea6289c8e	RECUR	A	Z17109ZQGNMP0809P	88075-E1.V041PD.E01		1896.3
+10000000001Z17109P01	d6f16701-ae31-4be4-ae93-72bea6289c8e	RECUR	A	Z17109ZQNNMP0809P	88075-E1.V041PD.E01		551.79
+10000000001Z17237B01	88fb70ac-eb31-43e5-8efc-498e0279a247	RECUR	A	Z17237SQNNMP0631P	556014-E9.Z399PD.E06		406.29
+10000000001Z17277P01	ef31cea9-9f63-42cd-913c-25daf305dd37	RECUR	A	Z17277ZQNNMP0637P	556019-E6.Z514PD.E01		336.23
+10000000001Z17290P01	de0f509a-e7bd-4836-98bf-4a0d4d2bd77e	RECUR	A	Z17290ZQNNMP0726P	556509-E1.Z346PD.E01		2854.18
+10000000001Z17303P01	4d73acd8-0325-4034-8eac-e769100fa9e0	RECUR	A	Z17303ZQNNMP0578P	524710-E3.A397PD.E01		2195.37
+10000000001Z17333B01	cae10ab1-65be-4cde-bff0-510752fcd634	RECUR	A	Z17333ZNNNMP0650E	556060-E9.Z697PD.E01		901.55
+10000000001Z17343P01	3ec323a8-cb92-4030-93be-a753691b5887	RECUR	A	Z17343ZQNNMP0727P	556515-E1.Z250PD.E01		360.1
+10000000001Z17353B01	25ff1a74-d56f-4858-aad7-75f10bb95ec9	RECUR	A	Z17353ZQNNMP0729P	556523-E1.Z328PD.E01		192.17
+10000000001Z17381P01	395d857f-6b7c-4b3b-9179-2d0d2343f4d4	RECUR	A	Z17381ZQGNMP0680P	556383-E1.Z662PD.E01		455.55
+10000000001Z17409P01	7d698ea3-b8f2-4357-8faa-df40fc10eb38	RECUR	A	Z17409ZQNNMP0694P	556407-E1.Z678PD.E01		414.54
+10000000001Z17437P01	f1eb484a-012f-47d0-a650-2cb95307c04a	RECUR	A	Z17437ZQNNMP0718P	556443-E2.Z514PD.E01		210.51
+10000000001Z17469P01	33fa6c31-0cb4-42b7-b09e-b678004f812c	RECUR	A	Z17469ZQNNMP0741P	556565-E1.Z514PD.E01		1124.14
+10000000001Z17520P01	cf09590c-8f2c-4686-87d7-40c4b1501ac0	RECUR	A	Z17520ZQNNMP0674P	556271-E3.Z399PD.E01		97.94
+10000000002A17130P02	8d8e226e-0b25-4127-81ac-e6a17818646d	RECUR	A	A17130ZQNNMP0689P	556403-E1.Z514PD.E01		891
+10000000002D17349P01	d5119196-6a77-4720-a4f6-8858db53257f	RECUR	A	D17349ZQNNMP0667P	556245-E5.Z346PD.E01		1576.35
+10000000002Z03682P01	089fdffe-d01a-4d7d-a6d4-fe335865c3e9	RECUR	A	Z03682ZQNXMP0358P	523631-E1.A440PD.R01		959.41
+10000000002Z03682P01	089fdffe-d01a-4d7d-a6d4-fe335865c3e9	RECUR	A	Z03682ZQNXMP0358F	523631-E1.A440PD.R03		72.89
+10000000002Z15324P01	1a071b10-747f-4c26-9513-bb0fd52e012b	RECUR	A	Z15324ZQNNMP0801P	765492-E1.S204PD.E01		1351.88
+10000000002Z15520P01	de75df65-a13e-4711-8be8-508eaf6244f2	RECUR	A	Z15520ZQNNMP0528P	523819-E1.A442PD.E01		1760.95
 
 
-# Register the DataFrames as temporary views
-source_df.createOrReplaceTempView("srcdata")
-# target_df.createOrReplaceTempView("tgtdata")
+import sys
+import time
+import boto3
+import re
+from awsglue.transforms import *
+from awsglue.utils import getResolvedOptions
+from pyspark.context import SparkContext
+from awsglue.context import GlueContext
+from awsglue.job import Job
+from awsglue import DynamicFrame
+from datetime import datetime
 
-# display the data
-print("source data")
-# source_df.show()
-def is_holiday(date):
-    # Convert the string to a datetime object
-    date_obj = datetime.strptime(date, "%Y-%m-%d")
+## @params: [JOB_NAME]
+args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 
-    # Format the datetime object to the desired format
-    date = date_obj.strftime("%d-%b-%y")
-    print(date)
-    spark.sql(f"SELECT * FROM srcdata WHERE CALENDAR_DATE = '{date}' and trim(TYPE_DATE) in ('FINH', 'WEND')")
-    ret = spark.sql(f"SELECT * FROM srcdata WHERE CALENDAR_DATE = '{date}' and trim(TYPE_DATE) in ('FINH', 'WEND')")
-    print("ret",ret.count())
-    if ret.count() > 0:
-        return True
-    else:
-        return False
+sc = SparkContext()
+glueContext = GlueContext(sc)
+spark = glueContext.spark_session
+job = Job(glueContext)
+job.init(args['JOB_NAME'], args)
+
+# s3 = boto3.resource('s3')
+# #tgt_bucket='uat1-gwf-cc-cats-publish-class0-us-east-1'
+tgt_bucket='uat2-gwf-cc-cats-filexfer-us-east-1'
+# #tgt_key='release01/2023-12-07/'
+tgt_key='outbound/CaTS_Automation_Testing/ERF9/'
 
 
-#calculate the vch date from sec date by checking the finh_df
-def calculate_vch_date(sec_date):
-    # Convert the date to datetime
-    sec_date = datetime.strptime(sec_date, '%Y-%m-%d')
-    print(sec_date, "in calculate_vch_date")
-    
-    vch_date = sec_date - timedelta(days=1)
-    # Check if the date is a holiday
-    while is_holiday(vch_date.strftime('%Y-%m-%d')):
-        # Subtract one more day
-        vch_date = vch_date - timedelta(days=1)
+cur_date=str(time.strftime('%Y%m%d'))
+day_of_year=datetime.now().timetuple().tm_yday
+year=str(time.strftime('%y'))
+date_file=str(time.strftime('%Y%m%d%H%M%S'))
 
-    
-    return vch_date.strftime("%Y-%m-%d")
+src_bucket = 'uat1-gwf-cc-cats-filexfer-us-east-1'
+src_key= 'inbound/telus/'
+#########################################
+# Monthly Source Files
 
-src_date = "2025-01-21"
-print("vsh date for",src_date," is ", calculate_vch_date(src_date))
-print(is_holiday(src_date))
+Monthly_Pregexp = 'P_DB_PAYMENT_PAYMENTS_M\d{2}_\d{8}_\d{6}'
+Monthly_Dregexp = 'DB_PAYMENT_DEPOSIT_M\d{2}_\d{8}_\d{6}'
+#########################################
+# Weekly Source Files
+
+Weekly_Pregexp = 'P_DB_PAYMENT_PAYMENTS_\d{8}_\d{6}'
+Weekly_Dregexp = 'DB_PAYMENT_DEPOSIT_\d{8}_\d{6}'
+
+
+# Source Data
+# ######################################################################################
+# payments
+
+print("Source data payment")
+
+#weekly
+# PAYMENTS_PATH="s3://uat2-gwf-cc-cats-filexfer-us-east-1/inbound/telus/P_DB_PAYMENT_PAYMENTS_12062024_104719.csv"
+
+#Monthly
+PAYMENTS_PATH="s3://uat1-gwf-cc-cats-filexfer-us-east-1/inbound/telus/DB_PAYMENT_PAYMENTS_M01_01312025_122503.csv"
+
+PAYMENTS_DF = spark.read.format('com.databricks.spark.csv').options(header='true', delimiter='|', quote='"', escape='"', skip_blank_lines=True).load(f"{PAYMENTS_PATH}")
+PAYMENTS_DF.createOrReplaceTempView("payment")
+print(PAYMENTS_DF.printSchema())
+# spark.sql("select * from  payment limit 30").show(truncate=0)
+
+
+
+
+# ######################################################################################
+# target Data
+# ######################################################################################
+# preprocessed payments
+
+print("target data payment")
+
+#weekly
+# PAYMENTS_PATH="s3://uat2-gwf-cc-cats-filexfer-us-east-1/inbound/telus/P_DB_PAYMENT_PAYMENTS_12062024_104719.csv"
+
+#Monthly
+P_PAYMENTS_PATH="s3://uat1-gwf-cc-cats-filexfer-us-east-1/inbound/telus/P_DB_PAYMENT_PAYMENTS_M01_01312025_122503.csv"
+
+P_PAYMENTS_DF = spark.read.format('com.databricks.spark.csv').options(header='true', delimiter='|', quote='"', escape='"', skip_blank_lines=True).load(f"{P_PAYMENTS_PATH}")
+P_PAYMENTS_DF.createOrReplaceTempView("preprocessed")
+print(P_PAYMENTS_DF.printSchema())
+# spark.sql("select * from  preprocessed limit 30").show(truncate=0)
+# spark.sql("select * from  preprocessed where PaymentID='c3970c0d-7628-4faa-afd8-7dd9a9ab0758'").show(truncate=0)
+# ######################################################################################
+
+
+print("source join data")
+
+df_src_1=spark.sql('''
+    select pre.PaymentID,pre.TransactionCategory,pre.TransactionType,pre.TransactionCode,pre.AccountFunding,p.AccountFunding
+ from payment p join preprocessed pre on p.payeeid = pre.payeeid and p.paymentid = pre.paymentid and p.TransactionCode=pre.TransactionCode
+ where
+    trim(p.TransactionType) = 'A' and
+    trim(p.TransactionCategory)='RECUR' and
+    substr(trim(p.TransactionCode),10,1) = 'X' and
+    substr(trim(p.TransactionCode), -1) in ('F', 'G', 'H') and
+    split_part(pre.AccountFunding,".", 3) = 'R03'
+''')
+
+df_src_1.show(30,truncate=0)
+print("F2........End")
+print("count from source ="+str(df_src_1.count()))
+
+
+df_src_2=spark.sql('''
+SELECT 
+    paymentid, 
+    COUNT(DISTINCT AccountFunding) AS distinct_accountfunding_count
+FROM
+    preprocessed
+GROUP BY
+    paymentid
+HAVING 
+    COUNT(DISTINCT AccountFunding) > 1;
+''')
+
+df_src_2.show(30,truncate=0)
+print("F2........End")
+print("count from source ="+str(df_src_2.count()))
+
+# df_src_1 = spark.sql(''' select DISTINCT split_part(p.AccountFunding,".", 1) AS SOURCE_ACCT_CNTRCT_NUM, 
+#     split_part(p.AccountFunding,".", 2) AS SOURCE_SDIO, 
+#     split_part(p.AccountFunding,".", 3) AS SOURCE_TTC, 
+#     TRIM(p.TransactionCategory) AS SOURCE_TRANSACTION_CATEGORY, 
+#     TRIM(p.TransactionCode) AS SOURCE_TRANSACTION_CODE, 
+#     l.cntrct_num AS ERF_CNTRCT_NUM, 
+#     l.CNTRCT_TYP_CD AS ERF_CNTRCT_TYP_CD, 
+#     l.fund_id AS ERF_FUND_ID, 
+#     lookup.trans_Typ_Cd AS ERF_TRANS_TYPE_CODE, 
+#     "Invalid SDIO and Transaction Code combination found in the source file" AS ERROR_DESCRIPTION  from payment p inner join deposit d on p.payeeid = d.payeeid and p.paymentid = d.paymentid inner join fund_lookup l on SPLIT(p.AccountFunding,'\\\\.')[0] = trim(l.EASY_Group_Account_Id) and SPLIT(p.AccountFunding,'\\\\.')[1] = trim(l.SDIO_ID) inner join ttc_lookup lookup on SPLIT(p.AccountFunding,'\\\\.')[2] = trim(lookup.Telus_Code) and trim(lookup.Telus_Primary_Ind) = 'Y' where trim(p.TransactionType) = 'A' and substr(trim(p.TransactionCode), -1) not in ('F', 'G', 'H') and ((substr(trim(p.TransactionCode),9,1) != 'P' and split_part(p.AccountFunding,'.',2) != 'PURANN')
+#          or (substr(trim(p.TransactionCode),9,1) != 'P' and split_part(p.AccountFunding,'.',2) = 'PURANN') 
+#          or (substr(trim(p.TransactionCode),9,1) = 'P' and split_part(p.AccountFunding,'.',2) != 'PURANN'))''')
+
+
+# Save_PATH ="s3://uat2-gwf-cc-cats-filexfer-us-east-1/outbound/CaTS_Automation_Testing/ERF9_errlog/erf9_src_data/"
+# df_src_1.coalesce(1).write.format('com.databricks.spark.csv').options(header='true', delimiter='|', quote='"', escape='"', skip_blank_lines=True).mode("overwrite").save(f"{Save_PATH}")
+
+
+
+
+job.commit()
